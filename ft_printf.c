@@ -57,6 +57,14 @@ void	flag_X(va_list argptr)
 	ft_putstr(itoa_base(nbr, 16, 1));
 }
 
+void	flag_unsigned(va_list argptr)
+{
+	unsigned int nbr;
+
+	nbr = va_arg(argptr, unsigned int);
+	ft_putstr(itoa_base(nbr, 8, 0));
+}
+
 void	test(int a)
 {
 	ft_putnbr(a);
@@ -83,10 +91,15 @@ int	ft_printf(const char *format, ...)
 		{
 			if (format[i + 1] == 's')
 				flag_s(argptr);
-			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
+			else if (format[i + 1] == 'd' || 
+				format[i + 1] == 'i')
 				flag_integer(argptr);
-			else if (format[i + 1] == 'o' || format[i + 1] == 'O')
+			else if (format[i + 1] == 'o')
 				flag_o(argptr);
+			else if (format[i + 1] == 'D' ||
+				format[i + 1] == 'O' ||
+				format[i + 1] == 'U')
+				flag_unsigned(argptr);
 			else if (format[i + 1] == 'x')
 				flag_x(argptr);
 			else if (format[i + 1] == 'X')
@@ -110,8 +123,8 @@ int	ft_printf(const char *format, ...)
 int	main(void)
 {
 	int i = 46347843;
-	printf("%O\n", i);
-	ft_printf("%O\n", i);
+	printf("%D\n", i);
+	ft_printf("%D\n", i);
 	// ft_printf("%X\n", i);
 	// printf("%s\n", itoa_base(i, 16, 0));
 	// ft_printf("%s\n%d\n%i\n%o\n%q", "one", 2, 300, 9, 7);
