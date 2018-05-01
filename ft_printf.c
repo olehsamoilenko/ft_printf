@@ -1,9 +1,15 @@
-#include <stdarg.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/05/01 14:05:44 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/01 14:05:48 by osamoile         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#include <stdio.h> //trash
-
-#include "libft/libft.h" //problem
 #include "printf.h"
 
 void	flag_s(va_list argptr)
@@ -27,6 +33,30 @@ void	flag_persent(va_list argptr)
 	ft_putchar('%');
 }
 
+void	flag_x(va_list argptr)
+{
+	int nbr;
+
+	nbr = va_arg(argptr, int);
+	ft_putstr(itoa_base(nbr, 16, 0));
+}
+
+void	flag_o(va_list argptr)
+{
+	int nbr;
+
+	nbr = va_arg(argptr, int);
+	ft_putstr(itoa_base(nbr, 8, 0));
+}
+
+void	flag_X(va_list argptr)
+{
+	int nbr;
+
+	nbr = va_arg(argptr, int);
+	ft_putstr(itoa_base(nbr, 16, 1));
+}
+
 void	test(int a)
 {
 	ft_putnbr(a);
@@ -37,8 +67,9 @@ void	test(int a)
 // 	// f(a);
 // }
 
+
+
 int	ft_printf(const char *format, ...)
-// int ft_printf(int num, ...)
 {
 	va_list	argptr;
 	int		i;
@@ -54,8 +85,12 @@ int	ft_printf(const char *format, ...)
 				flag_s(argptr);
 			else if (format[i + 1] == 'd' || format[i + 1] == 'i')
 				flag_integer(argptr);
-			else if (format[i + 1] == 'o')
+			else if (format[i + 1] == 'o' || format[i + 1] == 'O')
 				flag_o(argptr);
+			else if (format[i + 1] == 'x')
+				flag_x(argptr);
+			else if (format[i + 1] == 'X')
+				flag_X(argptr);
 			else if (format[i + 1] == '%')
 				flag_persent(argptr);
 			else
@@ -74,8 +109,14 @@ int	ft_printf(const char *format, ...)
 
 int	main(void)
 {
-
-	ft_printf("%s\n%d\n%i\n%o\n%q", "one", 2, 300, 9, 7);
-	printf("ORIGINAL: %o\n", -2);
+	int i = 46347843;
+	printf("%O\n", i);
+	ft_printf("%O\n", i);
+	// ft_printf("%X\n", i);
+	// printf("%s\n", itoa_base(i, 16, 0));
+	// ft_printf("%s\n%d\n%i\n%o\n%q", "one", 2, 300, 9, 7);
+	// printf("ORIGINAL: %0*.*f\n", 8, 4, 2.5);
+	// printf("ORIGINAL: %08.4f\n", 2.5);
+	// printf("ORIGINAL: %-20s\n", "a");
 	// printf("%b\n", 255);
 }
