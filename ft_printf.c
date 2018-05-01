@@ -123,8 +123,8 @@ int	ft_printf(const char *format, ...)
 int	main(void)
 {
 	int i = 46347843;
-	printf("%D\n", i);
-	ft_printf("%D\n", i);
+	printf("%20i\n", i);
+	// ft_printf("%U\n", i);
 	// ft_printf("%X\n", i);
 	// printf("%s\n", itoa_base(i, 16, 0));
 	// ft_printf("%s\n%d\n%i\n%o\n%q", "one", 2, 300, 9, 7);
