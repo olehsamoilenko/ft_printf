@@ -12,17 +12,7 @@
 
 #include "printf.h"
 
-typedef struct 	s_pattern
-{
-	int hash;
-	int minus;
-	int plus;
-	int space;
-	int zero;
-	int width;
-	int precision;
-	char type;
-}				t_pattern;
+
 
 t_pattern new_value(void)
 {
@@ -39,7 +29,7 @@ t_pattern new_value(void)
 	return (tmp);
 }
 
-void	flag_c(va_list argptr, t_pattern tmp)
+void	type_c(va_list argptr, t_pattern tmp)
 {
 	int	c;
 
@@ -47,7 +37,7 @@ void	flag_c(va_list argptr, t_pattern tmp)
 	ft_putchar(c);
 }
 
-void	flag_s(va_list argptr, t_pattern tmp)
+void	type_s(va_list argptr, t_pattern tmp)
 {
 	char *str;
 
@@ -55,7 +45,7 @@ void	flag_s(va_list argptr, t_pattern tmp)
 	ft_putstr(str);
 }
 
-void	flag_integer(va_list argptr, t_pattern tmp)
+void	type_integer(va_list argptr, t_pattern tmp)
 {
 	int nbr;
 
@@ -63,44 +53,12 @@ void	flag_integer(va_list argptr, t_pattern tmp)
 	ft_putnbr(nbr);
 }
 
-void	flag_persent(va_list argptr, t_pattern tmp)
+void	type_persent(va_list argptr, t_pattern tmp)
 {
 	ft_putchar('%');
 }
 
-void	flag_x(va_list argptr, t_pattern tmp)
-{
-	int nbr;
-
-	nbr = va_arg(argptr, int);
-	ft_putstr(itoa_base(nbr, 16, 0));
-}
-
-void	flag_o(va_list argptr, t_pattern tmp)
-{
-	int nbr;
-	char *str;
-	int len;
-
-	nbr = va_arg(argptr, int);
-	str = itoa_base(nbr, 8, 0);
-	len = ft_strlen(str);
-	len = tmp.width - len;
-	if (tmp.minus == 1)
-	{
-		ft_putstr(str);
-		while (len-- > 0)
-			ft_putchar(' ');
-	}
-	else
-	{
-		while (len-- > 0)
-			ft_putchar(' ');
-		ft_putstr(str);
-	}
-}
-
-void	flag_X(va_list argptr, t_pattern tmp)
+void	type_X(va_list argptr, t_pattern tmp)
 {
 	int nbr;
 
@@ -108,7 +66,7 @@ void	flag_X(va_list argptr, t_pattern tmp)
 	ft_putstr(itoa_base(nbr, 16, 1));
 }
 
-void	flag_unsigned(va_list argptr, t_pattern tmp)
+void	type_unsigned(va_list argptr, t_pattern tmp)
 {
 	unsigned int nbr;
 
@@ -121,7 +79,7 @@ void	test(int a)
 	ft_putnbr(a);
 }
 
-// void	flag(int a, *f(int)) // problem !!!
+// void	type(int a, *f(int)) // problem !!!
 // {
 // 	// f(a);
 // }
@@ -159,36 +117,24 @@ void	put_to_value(t_pattern *tmp, char flag)
 		tmp->space = 1;
 }
 
-void	show_tmp(t_pattern tmp)
-{
-	printf("hash: %d\n", tmp.hash);
-	printf("minus: %d\n", tmp.minus);
-	printf("plus: %d\n", tmp.plus);
-	printf("zero: %d\n", tmp.zero);
-	printf("space: %d\n", tmp.space);
-	printf("width: %d\n", tmp.width);
-	printf("precision: %d\n", tmp.precision);
-	printf("type: %c\n", tmp.type);
-}
-
 void	print(va_list argptr, t_pattern tmp)
 {
 	if (tmp.type == 's')
-		flag_s(argptr, tmp);
+		type_s(argptr, tmp);
 	else if (tmp.type == 'c')
-		flag_c(argptr, tmp);
+		type_c(argptr, tmp);
 	else if (tmp.type == 'd' || tmp.type == 'i')
-		flag_integer(argptr, tmp);
+		type_integer(argptr, tmp);
 	else if (tmp.type == 'o')
-		flag_o(argptr, tmp);
+		type_o(argptr, tmp);
 	else if (tmp.type == 'D' || tmp.type == 'O' || tmp.type == 'U')
-		flag_unsigned(argptr, tmp);
+		type_unsigned(argptr, tmp);
 	else if (tmp.type == 'x')
-		flag_x(argptr, tmp);
+		type_x(argptr, tmp);
 	else if (tmp.type == 'X')
-		flag_X(argptr, tmp);
+		type_X(argptr, tmp);
 	else if (tmp.type == '%')
-		flag_persent(argptr, tmp);
+		type_persent(argptr, tmp);
 }
 
 int		ignored_error(char flag1, char flag2)
@@ -223,7 +169,11 @@ int		check_flags(t_pattern tmp)
 	if (tmp.type == 'o' && tmp.plus == 1)
 		return(und_behavior_error('+', 'o'));
 	if (tmp.type == 'o' && tmp.space == 1)
-		return(und_behavior_error(' ', 'o'));
+		return(und_behavior_error(' ', 'o'));	
+	if (tmp.type == 'x' && tmp.plus == 1)
+		return(und_behavior_error('+', 'x'));
+	if (tmp.type == 'x' && tmp.space == 1)
+		return(und_behavior_error(' ', 'x'));
 	return (1);
 }
 
@@ -253,8 +203,8 @@ int	ft_printf(const char *format, ...)
 				start = i + 1;
 				while (ft_isdigit(format[++i]))
 					;
+				tmp.precision = ft_atoi(ft_strsub(format, start, i - start));
 			}
-			tmp.precision = ft_atoi(ft_strsub(format, start, i - start));
 			tmp.type = format[i];
 			if (check_flags(tmp) == 0)
 				return (0);
@@ -266,40 +216,4 @@ int	ft_printf(const char *format, ...)
 	}
 
 	return (100500);
-}
-
-
-int	main(void)
-{
-	int i = 1335345;
-	char *s = "abcdefghijk";
-	char c = 42;
-
-	s = "abc";
-	// i = 12;
-	// printf("%d\n%.5d\n", i, i);
-	// printf("%o\n%+   10o\n", i, i);
-	// printf("%x\n%+   10x\n", i, i);
-	// printf("%s\n%.5s\n", s, s);
-	// printf("%c %0c\n", c, c);
-
-	// printf("%p\n%#p\n", &i, &i);
-
-	// printf("%20i\n", i);
-	// ft_printf("%U\n", i);
-
-	// ft_printf("%w10o\n", i);
-	// ft_printf("%10o\n", i);
-	printf("%3o\n", i);
-	ft_printf("%3o\n", i);
-	// ft_printf("%+ d\n", 12);
-	// ft_printf("%0-d%s\n", i, s);
-	// printf("%##+- 0005d\n", i);
-	// ft_printf("%-000+#123.567o\n", i);
-	// printf("%s\n", itoa_base(i, 16, 0));
-	// ft_printf("%s\n%d\n%i\n%o\n%q", "one", 2, 300, 9, 7);
-	// printf("ORIGINAL: %0*.*f\n", 8, 4, 2.5);
-	// printf("ORIGINAL: %08.4f\n", 2.5);
-	// printf("ORIGINAL: %-20s\n", "a");
-	// printf("%b\n", 255);
 }

@@ -45,7 +45,7 @@ char		*itoa_base(int num, int base, int letters)
 	char	*res;
 	int		len;
 
-	if (num == 0)
+	if (num <= 0)
 		return (ft_strdup("0"));
 	len = count(num, base);
 	// printf("LEN: %d\n", len);
