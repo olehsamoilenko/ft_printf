@@ -58,14 +58,6 @@ void	type_persent(va_list argptr, t_pattern tmp)
 	ft_putchar('%');
 }
 
-void	type_X(va_list argptr, t_pattern tmp)
-{
-	int nbr;
-
-	nbr = va_arg(argptr, int);
-	ft_putstr(itoa_base(nbr, 16, 1));
-}
-
 void	type_unsigned(va_list argptr, t_pattern tmp)
 {
 	unsigned int nbr;
@@ -129,10 +121,8 @@ void	print(va_list argptr, t_pattern tmp)
 		type_o(argptr, tmp);
 	else if (tmp.type == 'D' || tmp.type == 'O' || tmp.type == 'U')
 		type_unsigned(argptr, tmp);
-	else if (tmp.type == 'x')
-		type_x(argptr, tmp);
-	else if (tmp.type == 'X')
-		type_X(argptr, tmp);
+	else if (tmp.type == 'x' || tmp.type == 'X')
+		type_hex(argptr, tmp);
 	else if (tmp.type == '%')
 		type_persent(argptr, tmp);
 }

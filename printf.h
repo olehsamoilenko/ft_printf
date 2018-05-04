@@ -35,17 +35,20 @@ typedef struct	s_spaces
 	int start;
 	int end;
 	int zeroes;
+	int octal;
+	int hex;
 }				t_spaces;
 
 int		ft_printf(const char *format, ...);
 char	*itoa_base(int num, int base, int letters);
 
 void	type_o(va_list argptr, t_pattern tmp);
-void	type_x(va_list argptr, t_pattern tmp);
+void	type_hex(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 
 void	tests_o(void);
-void	tests_x(void);
+void	tests_hex(void);
+void	tests_integer(void);
 
 #endif

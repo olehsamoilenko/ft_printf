@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tests_integer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/03 13:32:43 by osamoile          #+#    #+#             */
-/*   Updated: 2018/05/03 13:32:59 by osamoile         ###   ########.fr       */
+/*   Created: 2018/05/04 10:51:12 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/04 10:51:13 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int	main(void)
+void	tests_integer(void)
 {
-	// tests_o();
-	// tests_hex();
-	tests_integer();
+	int i = 123456;
+	int j = 1;
+
+	printf("%d OR: %i@\n", j, i);
+	ft_printf("%d FT: %i@\n", j, i);
+	j++;
+	printf("%d OR: %i@\n", j, -i);
+	ft_printf("%d FT: %i@\n", j, -i);
+	j++;
+	printf("%d OR: %i@\n", j, 0);
+	ft_printf("%d FT: %i@\n", j, 0);
+	j++;
 }

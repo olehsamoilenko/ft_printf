@@ -8,8 +8,8 @@ FLAGS = -Wall -Werror -Wextra
 SRC =	ft_printf.c \
 		itoa_base.c \
 		type_o.c \
-		type_x.c \
-		main.c tests_o.c tests_x.c
+		type_hex.c \
+		main.c tests_o.c tests_hex.c
 
 all: $(NAME)
 

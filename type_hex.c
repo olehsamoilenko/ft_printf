@@ -1,61 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type_o.c                                           :+:      :+:    :+:   */
+/*   type_hex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/03 13:59:15 by osamoile          #+#    #+#             */
-/*   Updated: 2018/05/03 13:59:29 by osamoile         ###   ########.fr       */
+/*   Created: 2018/05/03 18:39:32 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/03 18:39:33 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-void	show_tmp(t_pattern tmp)
-{
-	printf("hash: %d\n", tmp.hash);
-	printf("minus: %d\n", tmp.minus);
-	printf("plus: %d\n", tmp.plus);
-	printf("zero: %d\n", tmp.zero);
-	printf("space: %d\n", tmp.space);
-	printf("width: %d\n", tmp.width);
-	printf("precision: %d\n", tmp.precision);
-	printf("type: %c\n", tmp.type);
-}
-
-t_spaces	new_spaces(void)
-{
-	t_spaces tmp;
-
-	tmp.start = 0;
-	tmp.end = 0;
-	tmp.zeroes = 0;
-	tmp.octal = 0;
-	tmp.hex = 0;
-	return (tmp);
-}
-
-void	type_o(va_list argptr, t_pattern tmp)
+void	type_hex(va_list argptr, t_pattern tmp)
 {
 	int nbr;
 	char *str;
 	t_spaces spaces;
 
 	nbr = va_arg(argptr, int);
-	str = itoa_base(nbr, 8, 0);
+	if (tmp.type == 'x')
+		str = itoa_base(nbr, 16, 0);
+	else if (tmp.type == 'X')
+		str = itoa_base(nbr, 16, 1);
 	spaces = new_spaces();
-	
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
 		spaces.zeroes = 0;
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.hash == 1 && nbr > 0 && spaces.zeroes == 0)
+	if (tmp.hash == 1 && nbr > 0/*&& spaces.zeroes == 0*/)
 	{
-		spaces.octal += 1;
-		spaces.start -= 1;
+		spaces.hex += 1;
+		spaces.start -= 2;
 	}
 	if (tmp.minus == 1)
 	{
@@ -78,7 +56,12 @@ void	type_o(va_list argptr, t_pattern tmp)
 	if (spaces.octal == 1)
 		ft_putchar('0');
 	if (spaces.hex == 1)
-		ft_putstr("0x");
+	{
+		if (tmp.type == 'x')
+			ft_putstr("0x");
+		else if (tmp.type == 'X')
+			ft_putstr("0X");
+	}
 	while (spaces.zeroes-- > 0)
 		ft_putchar('0');
 	ft_putstr(str);
