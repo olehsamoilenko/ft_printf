@@ -159,11 +159,17 @@ int		check_flags(t_pattern tmp)
 	if (tmp.type == 'o' && tmp.plus == 1)
 		return(und_behavior_error('+', 'o'));
 	if (tmp.type == 'o' && tmp.space == 1)
-		return(und_behavior_error(' ', 'o'));	
+		return(und_behavior_error(' ', 'o'));
 	if (tmp.type == 'x' && tmp.plus == 1)
 		return(und_behavior_error('+', 'x'));
 	if (tmp.type == 'x' && tmp.space == 1)
 		return(und_behavior_error(' ', 'x'));
+	if (tmp.type == 'X' && tmp.plus == 1)
+		return(und_behavior_error('+', 'X'));
+	if (tmp.type == 'X' && tmp.space == 1)
+		return(und_behavior_error(' ', 'X'));
+	if (tmp.type == 'i' && tmp.hash == 1)
+		return(und_behavior_error('#', 'i'));
 	return (1);
 }
 
