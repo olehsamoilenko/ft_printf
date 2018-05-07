@@ -29,47 +29,34 @@ t_pattern new_value(void)
 	return (tmp);
 }
 
-void	type_c(va_list argptr, t_pattern tmp)
+int	type_c(va_list argptr, t_pattern tmp)
 {
 	int	c;
 
 	c = va_arg(argptr, int);
 	ft_putchar(c);
+	return (100500);
 }
 
-void	type_s(va_list argptr, t_pattern tmp)
-{
-	char *str;
-
-	str = va_arg(argptr, char*);
-	ft_putstr(str);
-}
-
-void	type_integer(va_list argptr, t_pattern tmp)
-{
-	int nbr;
-
-	nbr = va_arg(argptr, int);
-	ft_putnbr(nbr);
-}
-
-void	type_persent(va_list argptr, t_pattern tmp)
+int	type_persent(va_list argptr, t_pattern tmp)
 {
 	ft_putchar('%');
+	return (1);
 }
 
-void	type_unsigned(va_list argptr, t_pattern tmp)
+int	type_unsigned(va_list argptr, t_pattern tmp)
 {
 	unsigned int nbr;
 
 	nbr = va_arg(argptr, unsigned int);
 	ft_putstr(itoa_base(nbr, 8, 0));
+	return (100500);
 }
 
-void	test(int a)
-{
-	ft_putnbr(a);
-}
+// int	test(int a)
+// {
+// 	ft_putnbr(a);
+// }
 
 // void	type(int a, *f(int)) // problem !!!
 // {
@@ -109,68 +96,78 @@ void	put_to_value(t_pattern *tmp, char flag)
 		tmp->space = 1;
 }
 
-void	print(va_list argptr, t_pattern tmp)
+int	print(va_list argptr, t_pattern tmp)
 {
 	if (tmp.type == 's')
-		type_s(argptr, tmp);
+		return(type_s(argptr, tmp));
 	else if (tmp.type == 'c')
-		type_c(argptr, tmp);
+		return(type_c(argptr, tmp));
 	else if (tmp.type == 'd' || tmp.type == 'i')
-		type_integer(argptr, tmp);
+		return(type_integer(argptr, tmp));
 	else if (tmp.type == 'o')
-		type_o(argptr, tmp);
+		return(type_o(argptr, tmp));
 	else if (tmp.type == 'D' || tmp.type == 'O' || tmp.type == 'U')
-		type_unsigned(argptr, tmp);
+		return(type_unsigned(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X')
-		type_hex(argptr, tmp);
+		return(type_hex(argptr, tmp));
 	else if (tmp.type == '%')
-		type_persent(argptr, tmp);
+		return(type_persent(argptr, tmp));
 }
 
-int		ignored_error(char flag1, char flag2)
+// int		ignored_error(char flag1, char flag2)
+// {
+// 	ft_printf("%s	warning:%s flag '%c' is ignored when flag '%c' is present\n", RED, OFF, flag1, flag2);
+// 	return (0);
+// }
+
+// int		und_behavior_error(char flag, char type)
+// {
+// 	ft_printf("%s	warning:%s flag '%c' results in undefined behavior with '%c' conversion specifier\n",
+// 		RED, OFF, flag, type);
+// 	return (0);
+// }
+
+// int		invalid_specifier(char type)
+// {
+// 	ft_printf("%s	warning:%s invalid conversion specifier '%c'\n", RED, OFF, type);
+// 	return (0);
+// }
+
+// int		check_flags(t_pattern tmp)
+// {
+// 	if (!is_type(tmp.type))
+// 		return (invalid_specifier(tmp.type));
+
+// 	if (tmp.space == 1 && tmp.plus == 1)
+// 		return (ignored_error(' ', '+'));
+// 	if (tmp.zero == 1 && tmp.minus == 1)
+// 		return (ignored_error('0', '-'));
+
+// 	if (tmp.type == 'o' && tmp.plus == 1)
+// 		return(und_behavior_error('+', 'o'));
+// 	if (tmp.type == 'o' && tmp.space == 1)
+// 		return(und_behavior_error(' ', 'o'));
+// 	if (tmp.type == 'x' && tmp.plus == 1)
+// 		return(und_behavior_error('+', 'x'));
+// 	if (tmp.type == 'x' && tmp.space == 1)
+// 		return(und_behavior_error(' ', 'x'));
+// 	if (tmp.type == 'X' && tmp.plus == 1)
+// 		return(und_behavior_error('+', 'X'));
+// 	if (tmp.type == 'X' && tmp.space == 1)
+// 		return(und_behavior_error(' ', 'X'));
+// 	if (tmp.type == 'i' && tmp.hash == 1)
+// 		return(und_behavior_error('#', 'i'));
+// 	if (tmp.type == 'd' && tmp.hash == 1)
+// 		return(und_behavior_error('#', 'i'));
+// 	return (1);
+// }
+
+int max(int nbr1, int nbr2)
 {
-	ft_printf("%s	warning:%s flag '%c' is ignored when flag '%c' is present\n", RED, OFF, flag1, flag2);
-	return (0);
-}
-
-int		und_behavior_error(char flag, char type)
-{
-	ft_printf("%s	warning:%s flag '%c' results in undefined behavior with '%c' conversion specifier\n",
-		RED, OFF, flag, type);
-	return (0);
-}
-
-int		invalid_specifier(char type)
-{
-	ft_printf("%s	warning:%s invalid conversion specifier '%c'\n", RED, OFF, type);
-	return (0);
-}
-
-int		check_flags(t_pattern tmp)
-{
-	if (!is_type(tmp.type))
-		return (invalid_specifier(tmp.type));
-
-	if (tmp.space == 1 && tmp.plus == 1)
-		return (ignored_error(' ', '+'));
-	if (tmp.zero == 1 && tmp.minus == 1)
-		return (ignored_error('0', '-'));
-
-	if (tmp.type == 'o' && tmp.plus == 1)
-		return(und_behavior_error('+', 'o'));
-	if (tmp.type == 'o' && tmp.space == 1)
-		return(und_behavior_error(' ', 'o'));
-	if (tmp.type == 'x' && tmp.plus == 1)
-		return(und_behavior_error('+', 'x'));
-	if (tmp.type == 'x' && tmp.space == 1)
-		return(und_behavior_error(' ', 'x'));
-	if (tmp.type == 'X' && tmp.plus == 1)
-		return(und_behavior_error('+', 'X'));
-	if (tmp.type == 'X' && tmp.space == 1)
-		return(und_behavior_error(' ', 'X'));
-	if (tmp.type == 'i' && tmp.hash == 1)
-		return(und_behavior_error('#', 'i'));
-	return (1);
+	if (nbr1 >= nbr2)
+		return (nbr1);
+	else
+		return (nbr2);
 }
 
 int	ft_printf(const char *format, ...)
@@ -179,9 +176,11 @@ int	ft_printf(const char *format, ...)
 	int			i;
 	t_pattern	tmp;
 	int 		start;
+	int sum;
 
 	va_start(argptr, format); /* the last defined variable as parameter */
 	i = -1;
+	sum = 0;
 	while (format[++i])
 	{
 		if (format[i] == '%') /* qualifier */
@@ -202,14 +201,16 @@ int	ft_printf(const char *format, ...)
 				tmp.precision = ft_atoi(ft_strsub(format, start, i - start));
 			}
 			tmp.type = format[i];
-			if (check_flags(tmp) == 0)
-				return (0);
-			print(argptr, tmp);
+			// if (check_flags(tmp) == 0)
+			// 	return (0);
+			sum += print(argptr, tmp);
 			// show_tmp(tmp);
 		}
 		else
+		{
 			ft_putchar(format[i]);
+			sum += 1;
+		}
 	}
-
-	return (100500);
+	return (sum);
 }

@@ -31,12 +31,11 @@ t_spaces	new_spaces(void)
 	tmp.start = 0;
 	tmp.end = 0;
 	tmp.zeroes = 0;
-	tmp.octal = 0;
-	tmp.hex = 0;
+	tmp.prefix = 0;
 	return (tmp);
 }
 
-void	type_o(va_list argptr, t_pattern tmp)
+int	type_o(va_list argptr, t_pattern tmp)
 {
 	int nbr;
 	char *str;
@@ -54,8 +53,9 @@ void	type_o(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	if (tmp.hash == 1 && nbr > 0 && spaces.zeroes == 0)
 	{
-		spaces.octal += 1;
-		spaces.start -= 1;
+		// spaces.octal += 1;
+		spaces.prefix = "0";
+		spaces.start -= ft_strlen(spaces.prefix);
 	}
 	if (tmp.minus == 1)
 	{
@@ -73,15 +73,21 @@ void	type_o(va_list argptr, t_pattern tmp)
 	// ft_printf("spaces.end: %d\n", spaces.end);
 	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
 
-	while (spaces.start-- > 0)
-		ft_putchar(' ');
-	if (spaces.octal == 1)
-		ft_putchar('0');
-	if (spaces.hex == 1)
-		ft_putstr("0x");
 	while (spaces.zeroes-- > 0)
-		ft_putchar('0');
-	ft_putstr(str);
+		str = ft_strjoin("0", str);
+	str = ft_strjoin(spaces.prefix, str);
+	while (spaces.start-- > 0)
+		str = ft_strjoin(" ", str);
 	while (spaces.end-- > 0)
-		ft_putchar(' ');
+		str = ft_strjoin(str, " ");
+	ft_putstr(str);
+	return(ft_strlen(str));
+	// while (spaces.start-- > 0)
+	// 	ft_putchar(' ');
+	// ft_putstr(spaces.prefix);
+	// while (spaces.zeroes-- > 0)
+	// 	ft_putchar('0');
+	// ft_putstr(str);
+	// while (spaces.end-- > 0)
+	// 	ft_putchar(' ');
 }

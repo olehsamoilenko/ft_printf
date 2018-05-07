@@ -12,7 +12,7 @@
 
 #include "printf.h"
 
-void	type_hex(va_list argptr, t_pattern tmp)
+int	type_hex(va_list argptr, t_pattern tmp)
 {
 	int nbr;
 	char *str;
@@ -32,8 +32,11 @@ void	type_hex(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	if (tmp.hash == 1 && nbr > 0/*&& spaces.zeroes == 0*/)
 	{
-		spaces.hex += 1;
-		spaces.start -= 2;
+		if (tmp.type == 'x')
+			spaces.prefix = "0x";
+		else if (tmp.type == 'X')
+			spaces.prefix = "0X";
+		spaces.start -= ft_strlen(spaces.prefix);
 	}
 	if (tmp.minus == 1)
 	{
@@ -45,26 +48,14 @@ void	type_hex(va_list argptr, t_pattern tmp)
 		spaces.zeroes += spaces.start;
 		spaces.start = 0;
 	}
-	
-	// show_tmp(tmp);
-	// ft_printf("spaces.start: %d\n", spaces.start);
-	// ft_printf("spaces.end: %d\n", spaces.end);
-	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
 
-	while (spaces.start-- > 0)
-		ft_putchar(' ');
-	if (spaces.octal == 1)
-		ft_putchar('0');
-	if (spaces.hex == 1)
-	{
-		if (tmp.type == 'x')
-			ft_putstr("0x");
-		else if (tmp.type == 'X')
-			ft_putstr("0X");
-	}
 	while (spaces.zeroes-- > 0)
-		ft_putchar('0');
-	ft_putstr(str);
+		str = ft_strjoin("0", str);
+	str = ft_strjoin(spaces.prefix, str);
+	while (spaces.start-- > 0)
+		str = ft_strjoin(" ", str);
 	while (spaces.end-- > 0)
-		ft_putchar(' ');
+		str = ft_strjoin(str, " ");
+	ft_putstr(str);
+	return(ft_strlen(str));
 }

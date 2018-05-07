@@ -19,3 +19,5 @@ int main(void)
 	printf("%d\n", j);
 	printf("LOCALE: %d\n", MB_CUR_MAX);
 }
+
+

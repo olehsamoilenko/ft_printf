@@ -9,7 +9,9 @@ SRC =	ft_printf.c \
 		itoa_base.c \
 		type_o.c \
 		type_hex.c \
-		main.c tests_o.c tests_hex.c tests_integer.c
+		type_integer.c \
+		type_s.c \
+		main.c tests_o.c tests_hex.c tests_integer.c tests_s.c
 
 all: $(NAME)
 

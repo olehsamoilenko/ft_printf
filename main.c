@@ -16,5 +16,6 @@ int	main(void)
 {
 	// tests_o();
 	// tests_hex();
-	tests_integer();
+	// tests_integer();
+	tests_s();
 }
