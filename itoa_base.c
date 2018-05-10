@@ -12,7 +12,7 @@
 
 #include "printf.h"
 
-static int	count(int num, int base) /* 0 - lower, 1 - upper */ 
+static int	count(intmax_t num, int base)
 {
 	int		count;
 
@@ -36,11 +36,10 @@ static char	convert(int digit, int letters)
 		else
 			return ('A' + digit - 10);
 	}
-		
 	return (0);
 }
 
-char		*itoa_base(int num, int base, int letters)
+char		*itoa_base(intmax_t num, int base, int letters) /* 0 - lower, 1 - upper */
 {
 	char	*res;
 	int		len;
@@ -53,7 +52,7 @@ char		*itoa_base(int num, int base, int letters)
 	if (!res)
 		return (0);
 	res[len] = '\0';
-	while (num > 0)
+	while (num != 0)
 	{
 		// printf("%c\n", convert(num % base));
 		len--;

@@ -12,18 +12,6 @@
 
 #include "printf.h"
 
-void	show_tmp(t_pattern tmp)
-{
-	printf("hash: %d\n", tmp.hash);
-	printf("minus: %d\n", tmp.minus);
-	printf("plus: %d\n", tmp.plus);
-	printf("zero: %d\n", tmp.zero);
-	printf("space: %d\n", tmp.space);
-	printf("width: %d\n", tmp.width);
-	printf("precision: %d\n", tmp.precision);
-	printf("type: %c\n", tmp.type);
-}
-
 t_spaces	new_spaces(void)
 {
 	t_spaces tmp;

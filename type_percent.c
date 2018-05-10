@@ -1,47 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type_s.c                                           :+:      :+:    :+:   */
+/*   type_percent.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/10 14:15:59 by osamoile          #+#    #+#             */
-/*   Updated: 2018/05/10 14:16:04 by osamoile         ###   ########.fr       */
+/*   Created: 2018/05/10 14:43:41 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/10 14:43:45 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-int	type_s(va_list argptr, t_pattern tmp)
+int	type_persent(va_list argptr, t_pattern tmp)
 {
+	int nbr;
 	char *str;
 	t_spaces spaces;
 
-	str = va_arg(argptr, char*);
-	if (str == 0)
-		str = ft_strdup("(null)");
+	str = "%";
 	spaces = new_spaces();
-	
-	if (tmp.precision != 0)
-		str = ft_strsub(str, 0, tmp.precision);
-	// spaces.zeroes = tmp.precision - ft_strlen(str);
-	if (spaces.zeroes < 0)
-		spaces.zeroes = 0;
-	spaces.start = tmp.width /*- spaces.zeroes*/ - ft_strlen(str);
+	spaces.start = tmp.width - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-
 	if (tmp.minus == 1)
 	{
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
-
-	
-	// show_tmp(tmp);
-	// ft_printf("spaces.start: %d\n", spaces.start);
-	// ft_printf("spaces.end: %d\n", spaces.end);
-	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
+	if (tmp.zero == 1)
+	{
+		spaces.zeroes += spaces.start;
+		spaces.start = 0;
+	}
 
 	while (spaces.zeroes-- > 0)
 		str = ft_strjoin("0", str);

@@ -1,48 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type_hex.c                                         :+:      :+:    :+:   */
+/*   type_unsigned.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/03 18:39:32 by osamoile          #+#    #+#             */
-/*   Updated: 2018/05/03 18:39:33 by osamoile         ###   ########.fr       */
+/*   Created: 2018/05/10 17:11:49 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/10 17:12:04 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-// unsigned int	cast_hex(va_list argptr, t_pattern tmp)
-// {
-// 	unsigned int res;
-
-	
-// }
-
-int	type_hex(va_list argptr, t_pattern tmp)
+int	type_unsigned(va_list argptr, t_pattern tmp)
 {
-	intmax_t nbr;
+	uintmax_t nbr;
 	char *str;
 	t_spaces spaces;
 
+	// nbr = va_arg(argptr, int);
+
+	// if (ft_strcmp(tmp.cast, 0) == 1)
+	// 	nbr = (unsigned int)va_arg(argptr, unsigned int);
+	// else if (ft_strcmp(tmp.cast, "hh") == 1)
+	// 	nbr = (char)va_arg(argptr, int);
 	if (ft_strequ(tmp.cast, 0) == 1)
 		nbr = va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (short)va_arg(argptr, int);
+		nbr = (short)va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (char)va_arg(argptr, int);
+		nbr = (char)va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, long);
+		nbr = va_arg(argptr, unsigned long);
 	else if (ft_strequ(tmp.cast, "ll") == 1)
-		nbr = va_arg(argptr, long long);
+		nbr = va_arg(argptr, unsigned long long);
 	else if (ft_strequ(tmp.cast, "j") == 1)
-		nbr = va_arg(argptr, intmax_t);
+		nbr = va_arg(argptr, uintmax_t);
 	else if (ft_strequ(tmp.cast, "z") == 1)
 		nbr = va_arg(argptr, size_t);
-	// else if (ft_strcmp(tmp.cast, "hh") == 1)
-	// 	nbr = (char)va_arg(argptr, int);
-	// else if (ft_strcmp(tmp.cast, "h") == 1)
-	// 	nbr = (short)va_arg(argptr, int);
 	// else if (ft_strcmp(tmp.cast, "l") == 1)
 	// 	nbr = va_arg(argptr, long);
 	// else if (ft_strcmp(tmp.cast, "ll") == 1)
@@ -52,23 +47,26 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	// else if (ft_strcmp(tmp.cast, "z") == 1)
 	// 	nbr = va_arg(argptr, size_t);
 
-	if (tmp.type == 'x')
-		str = itoa_base(nbr, 16, 0);
-	else if (tmp.type == 'X')
-		str = itoa_base(nbr, 16, 1);
 	spaces = new_spaces();
+	str = ft_itoa(nbr);
+	// printf("%s\n", str);
+	
+
+	// if (nbr < 0)
+	// {
+	// 	// spaces.minus = 1;
+	// 	spaces.prefix = "-";
+	// 	str = ft_strsub(str, 1, ft_strlen(str) - 1);
+	// }
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
 		spaces.zeroes = 0;
-	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
+	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str) - ft_strlen(spaces.prefix);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.hash == 1 && nbr > 0/*&& spaces.zeroes == 0*/)
+	if (tmp.space == 1 && spaces.prefix == 0)
 	{
-		if (tmp.type == 'x')
-			spaces.prefix = "0x";
-		else if (tmp.type == 'X')
-			spaces.prefix = "0X";
+		spaces.prefix = " ";
 		spaces.start -= ft_strlen(spaces.prefix);
 	}
 	if (tmp.minus == 1)
@@ -81,7 +79,11 @@ int	type_hex(va_list argptr, t_pattern tmp)
 		spaces.zeroes += spaces.start;
 		spaces.start = 0;
 	}
-
+	
+	// show_tmp(tmp);
+	// ft_printf("spaces.start: %d\n", spaces.start);
+	// ft_printf("spaces.end: %d\n", spaces.end);
+	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
 	while (spaces.zeroes-- > 0)
 		str = ft_strjoin("0", str);
 	str = ft_strjoin(spaces.prefix, str);

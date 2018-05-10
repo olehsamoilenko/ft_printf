@@ -1,5 +1,4 @@
-
-NAME = ft_printf
+NAME = libftprintf.a
 
 HEADER = printf.h
 
@@ -11,7 +10,27 @@ SRC =	ft_printf.c \
 		type_hex.c \
 		type_integer.c \
 		type_s.c \
-		main.c tests_o.c tests_hex.c tests_integer.c tests_s.c
+		type_c.c \
+		type_percent.c \
+		type_unsigned.c \
+		ft_atoi.c \
+		ft_isdigit.c \
+		ft_itoa.c \
+		ft_countdigits.c \
+		ft_strjoin.c \
+		ft_strlen.c \
+		ft_strsub.c \
+		ft_strdup.c \
+		ft_putchar.c \
+		ft_putstr.c \
+		ft_strequ.c
+
+TESTS = main.c \
+		tests_o.c \
+		tests_hex.c \
+		tests_integer.c \
+		tests_s.c \
+		tests_c.c
 
 all: $(NAME)
 
@@ -21,16 +40,18 @@ OBJ = $(SRC:.c=.o)
 	gcc -c $< -o $@
 
 $(NAME): $(OBJ)
-	make -C libft
 	gcc -c $(SRC)
-	gcc $(FLAGS) -o $(NAME) $(OBJ) libft/*.c
+	ar -rc $(NAME) $(OBJ)
+
+
+main:
+	gcc $(SRC) main.c
+
 	
 clean:
-	make -C libft clean
 	rm -f $(OBJ)
 
 fclean: clean
-	rm -f libft/libft.a
 	rm -f $(NAME)
 
 re: fclean all

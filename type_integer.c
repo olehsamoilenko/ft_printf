@@ -14,13 +14,42 @@
 
 int	type_integer(va_list argptr, t_pattern tmp)
 {
-	int nbr;
+	intmax_t nbr;
 	char *str;
 	t_spaces spaces;
 
-	nbr = va_arg(argptr, int);
+	// nbr = va_arg(argptr, int);
+
+	// if (ft_strcmp(tmp.cast, 0) == 1)
+	// 	nbr = (unsigned int)va_arg(argptr, unsigned int);
+	// else if (ft_strcmp(tmp.cast, "hh") == 1)
+	// 	nbr = (char)va_arg(argptr, int);
+	if (ft_strequ(tmp.cast, 0) == 1)
+		nbr = va_arg(argptr, int);
+	else if (ft_strequ(tmp.cast, "h") == 1)
+		nbr = (short)va_arg(argptr, int);
+	else if (ft_strequ(tmp.cast, "hh") == 1)
+		nbr = (char)va_arg(argptr, int);
+	else if (ft_strequ(tmp.cast, "l") == 1)
+		nbr = va_arg(argptr, long);
+	else if (ft_strequ(tmp.cast, "ll") == 1)
+		nbr = va_arg(argptr, long long);
+	else if (ft_strequ(tmp.cast, "j") == 1)
+		nbr = va_arg(argptr, intmax_t);
+	else if (ft_strequ(tmp.cast, "z") == 1)
+		nbr = va_arg(argptr, size_t);
+	// else if (ft_strcmp(tmp.cast, "l") == 1)
+	// 	nbr = va_arg(argptr, long);
+	// else if (ft_strcmp(tmp.cast, "ll") == 1)
+	// 	nbr = va_arg(argptr, long long);
+	// else if (ft_strcmp(tmp.cast, "j") == 1)
+	// 	nbr = va_arg(argptr, intmax_t);
+	// else if (ft_strcmp(tmp.cast, "z") == 1)
+	// 	nbr = va_arg(argptr, size_t);
+
 	spaces = new_spaces();
 	str = ft_itoa(nbr);
+	// printf("%s\n", str);
 	
 
 	if (nbr < 0)
