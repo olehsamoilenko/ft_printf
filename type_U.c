@@ -25,7 +25,7 @@ int	type_U(va_list argptr, t_pattern tmp)
 	// else if (ft_strcmp(tmp.cast, "hh") == 1)
 	// 	nbr = (char)va_arg(argptr, int);
 	if (ft_strequ(tmp.cast, 0) == 1)
-		nbr = va_arg(argptr, unsigned int);
+		nbr = (unsigned long)va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "h") == 1)
 		nbr = (unsigned short)va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
@@ -48,7 +48,7 @@ int	type_U(va_list argptr, t_pattern tmp)
 	// 	nbr = va_arg(argptr, size_t);
 
 	spaces = new_spaces();
-	str = ft_itoa(nbr);
+	str = itoa_base(nbr, 10, 0);
 	// printf("check: %s\n", str);
 	
 

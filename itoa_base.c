@@ -12,7 +12,7 @@
 
 #include "printf.h"
 
-static int	count(intmax_t num, int base)
+static int	count(uintmax_t num, int base)
 {
 	int		count;
 
@@ -39,7 +39,7 @@ static char	convert(int digit, int letters)
 	return (0);
 }
 
-char		*itoa_base(intmax_t num, int base, int letters) /* 0 - lower, 1 - upper */
+char		*itoa_base(uintmax_t num, int base, int letters) /* 0 - lower, 1 - upper */
 {
 	char	*res;
 	int		len;

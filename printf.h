@@ -43,7 +43,7 @@ typedef struct	s_spaces
 }				t_spaces;
 
 int		ft_printf(const char *format, ...);
-char	*itoa_base(intmax_t num, int base, int letters);
+char	*itoa_base(uintmax_t num, int base, int letters);
 int		ft_atoi(const char *str);
 char	*ft_itoa(intmax_t number);
 int		ft_countdigits(intmax_t n);
