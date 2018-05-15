@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   type_unsigned.c                                    :+:      :+:    :+:   */
+/*   type_U       .c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,11 @@
 
 #include "printf.h"
 
-int	type_unsigned(va_list argptr, t_pattern tmp)
+int	type_U(va_list argptr, t_pattern tmp)
 {
-	uintmax_t nbr;
-	char *str;
-	t_spaces spaces;
+	uintmax_t	nbr;
+	char		*str;
+	t_spaces		spaces;
 
 	// nbr = va_arg(argptr, int);
 
@@ -27,9 +27,9 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 	if (ft_strequ(tmp.cast, 0) == 1)
 		nbr = va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (unsigned short)va_arg(argptr, unsigned int);
+		nbr = (unsigned short)va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (unsigned char)va_arg(argptr, unsigned int);
+		nbr = (unsigned char)va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "l") == 1)
 		nbr = va_arg(argptr, unsigned long);
 	else if (ft_strequ(tmp.cast, "ll") == 1)
@@ -49,7 +49,7 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 
 	spaces = new_spaces();
 	str = ft_itoa(nbr);
-	// printf("%s\n", str);
+	// printf("check: %s\n", str);
 	
 
 	// if (nbr < 0)

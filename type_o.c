@@ -31,6 +31,8 @@ int	type_o(va_list argptr, t_pattern tmp)
 
 	nbr = va_arg(argptr, int);
 	str = itoa_base(nbr, 8, 0);
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
 	spaces = new_spaces();
 	
 	spaces.zeroes = tmp.precision - ft_strlen(str);
@@ -39,7 +41,7 @@ int	type_o(va_list argptr, t_pattern tmp)
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.hash == 1 && nbr > 0 && spaces.zeroes == 0)
+	if (tmp.hash == 1 && spaces.zeroes == 0)
 	{
 		// spaces.octal += 1;
 		spaces.prefix = "0";

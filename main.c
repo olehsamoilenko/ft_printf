@@ -21,7 +21,7 @@ int	main(void)
 	// tests_c();
 	int i = 200;
 	int value;
-	int j = 0;;
+	int j = 0;
 	// printf("%d %D %O %U\n", i, i, i);
 	// printf("%d %#D %#O %#U\n", i, i, i);
 	// printf("%d % D % O % U\n", i, i, i);
@@ -49,10 +49,42 @@ int	main(void)
 	// value = ft_printf("%d % 10.5%@", j); printf(" VALUE: %d\n", value);
 	// j++;
 
-	   printf("%lld\n", -9223372036854775808);
-	ft_printf("%lld\n", -9223372036854775808);
+	   printf("or: %U\n", 42949672961);
+	ft_printf("my: %U\n", 42949672961);
+
+	   printf("or: %hU\n", 42949672961);
+	ft_printf("my: %hU\n", 42949672961);
+
+	   printf("or: %hhU\n", 42949672961);
+	ft_printf("my: %hhU\n", 42949672961);
+
+	//    printf("or: %lU\n", 4294967296);
+	// ft_printf("my: %lU\n", 4294967296);
+
+	//    printf("or: %llU\n", 4294967296);
+	// ft_printf("my: %llU\n", 4294967296);
+	
+	//    printf("or: %jU\n", 4294967296);
+	// ft_printf("my: %jU\n", 4294967296);
+	
+	//    printf("or: %zU\n", 4294967296);
+	// ft_printf("my: %zU\n", 4294967296);
 	// ft_printf("%x", -42);
 	// ft_printf("%u\n", -1);
+
+		
+	//    printf("or: %c\n", 0);
+	// ft_printf("my: %c\n", 0);
+
+	//    printf("or: %5c\n", 0);
+	// ft_printf("my: %5c\n", 0);
+
+	//    printf("or: %-5c\n", 0);
+	// ft_printf("my: %-5c\n", 0);
+
+	//    printf("or: %c\n", 0);
+	// ft_printf("my: %c\n", 0);
+
 
 	// printf("%d %-.12#034+qq q\n", 123);
 	return (0);

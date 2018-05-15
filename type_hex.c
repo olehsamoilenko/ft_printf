@@ -56,6 +56,8 @@ int	type_hex(va_list argptr, t_pattern tmp)
 		str = itoa_base(nbr, 16, 0);
 	else if (tmp.type == 'X')
 		str = itoa_base(nbr, 16, 1);
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
 	spaces = new_spaces();
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)

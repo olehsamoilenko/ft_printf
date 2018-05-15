@@ -100,8 +100,10 @@ int	print(va_list argptr, t_pattern tmp)
 		return(type_c(argptr, tmp));
 	else if (tmp.type == 'd' || tmp.type == 'i' || tmp.type == 'D')
 		return(type_integer(argptr, tmp));
-	else if (tmp.type == 'u' || tmp.type == 'U')
+	else if (tmp.type == 'u')
 		return(type_unsigned(argptr, tmp));
+	else if (tmp.type == 'U')
+		return (type_U(argptr, tmp));
 	else if (tmp.type == 'o' || tmp.type == 'O')
 		return(type_o(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X')
@@ -127,6 +129,7 @@ int	ft_printf(const char *format, ...)
 	t_pattern	tmp;
 	int 		start;
 	int sum;
+	int buf;
 
 	va_start(argptr, format); /* the last defined variable as parameter */
 	i = -1;
@@ -156,7 +159,12 @@ int	ft_printf(const char *format, ...)
 					start = i;
 					while (ft_isdigit(format[i]))
 						i++;
-					tmp.precision = ft_atoi(ft_strsub(format, start, i - start));
+					buf = ft_atoi(ft_strsub(format, start, i - start));
+					if (buf != 0) /* ("%.d",0) = " " */
+						tmp.precision = buf;
+					else
+						tmp.precision = -1;
+					
 				}
 				else if (is_cast(format[i]))
 				{

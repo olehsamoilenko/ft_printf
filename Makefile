@@ -13,6 +13,7 @@ SRC =	ft_printf.c \
 		type_c.c \
 		type_percent.c \
 		type_unsigned.c \
+		type_U.c \
 		ft_atoi.c \
 		ft_isdigit.c \
 		ft_itoa.c \
@@ -21,6 +22,7 @@ SRC =	ft_printf.c \
 		ft_strlen.c \
 		ft_strsub.c \
 		ft_strdup.c \
+		ft_strnew.c \
 		ft_putchar.c \
 		ft_putstr.c \
 		ft_strequ.c

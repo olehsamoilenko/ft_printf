@@ -18,12 +18,6 @@ int	type_integer(va_list argptr, t_pattern tmp)
 	char *str;
 	t_spaces spaces;
 
-	// nbr = va_arg(argptr, int);
-
-	// if (ft_strcmp(tmp.cast, 0) == 1)
-	// 	nbr = (unsigned int)va_arg(argptr, unsigned int);
-	// else if (ft_strcmp(tmp.cast, "hh") == 1)
-	// 	nbr = (char)va_arg(argptr, int);
 	if (ft_strequ(tmp.cast, 0) == 1)
 		nbr = va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "h") == 1)
@@ -38,20 +32,15 @@ int	type_integer(va_list argptr, t_pattern tmp)
 		nbr = va_arg(argptr, intmax_t);
 	else if (ft_strequ(tmp.cast, "z") == 1)
 		nbr = va_arg(argptr, size_t);
-	// else if (ft_strcmp(tmp.cast, "l") == 1)
-	// 	nbr = va_arg(argptr, long);
-	// else if (ft_strcmp(tmp.cast, "ll") == 1)
-	// 	nbr = va_arg(argptr, long long);
-	// else if (ft_strcmp(tmp.cast, "j") == 1)
-	// 	nbr = va_arg(argptr, intmax_t);
-	// else if (ft_strcmp(tmp.cast, "z") == 1)
-	// 	nbr = va_arg(argptr, size_t);
+
 
 	spaces = new_spaces();
 	str = ft_itoa(nbr);
-	// printf("%s\n", str);
-	
-
+	// printf("CHECK: %s\n", str);
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
+	// if (tmp.precision == -1)
+	// 	tmp.precision = 0;
 	if (nbr < 0)
 	{
 		// spaces.minus = 1;
@@ -89,13 +78,16 @@ int	type_integer(va_list argptr, t_pattern tmp)
 	// ft_printf("spaces.start: %d\n", spaces.start);
 	// ft_printf("spaces.end: %d\n", spaces.end);
 	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
+	// printf("CHECK: %s\n", str);
 	while (spaces.zeroes-- > 0)
 		str = ft_strjoin("0", str);
+	
 	str = ft_strjoin(spaces.prefix, str);
 	while (spaces.start-- > 0)
 		str = ft_strjoin(" ", str);
 	while (spaces.end-- > 0)
 		str = ft_strjoin(str, " ");
+	// printf("CHECK: %s\n", str);
 	ft_putstr(str);
 	return(ft_strlen(str));
 }

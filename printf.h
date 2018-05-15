@@ -53,6 +53,7 @@ void	ft_putstr(char const *s);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_strequ(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
+char	*ft_strnew(size_t size);
 size_t	ft_strlen(const char *s); //what about size_t?
 char	*ft_strjoin(char const *s1, char const *s2);
 
@@ -63,6 +64,7 @@ int type_s(va_list argptr, t_pattern tmp);
 int	type_c(va_list argptr, t_pattern tmp);
 int	type_persent(va_list argptr, t_pattern tmp);
 int	type_unsigned(va_list argptr, t_pattern tmp);
+int	type_U(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 
