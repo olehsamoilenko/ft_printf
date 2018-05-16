@@ -19,25 +19,29 @@ int	type_U(va_list argptr, t_pattern tmp)
 	t_spaces		spaces;
 
 	// nbr = va_arg(argptr, int);
-
+	// printf("before: %jU\n", nbr);
 	// if (ft_strcmp(tmp.cast, 0) == 1)
 	// 	nbr = (unsigned int)va_arg(argptr, unsigned int);
 	// else if (ft_strcmp(tmp.cast, "hh") == 1)
 	// 	nbr = (char)va_arg(argptr, int);
-	if (ft_strequ(tmp.cast, 0) == 1)
-		nbr = (unsigned long)va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (unsigned short)va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (unsigned char)va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, unsigned long);
-	else if (ft_strequ(tmp.cast, "ll") == 1)
-		nbr = va_arg(argptr, unsigned long long);
-	else if (ft_strequ(tmp.cast, "j") == 1)
-		nbr = va_arg(argptr, uintmax_t);
-	else if (ft_strequ(tmp.cast, "z") == 1)
-		nbr = va_arg(argptr, size_t);
+	// if (ft_strequ(tmp.cast, 0) == 1)
+		nbr = va_arg(argptr, unsigned long int);
+	// else if (ft_strequ(tmp.cast, "h") == 1)
+	// {
+	// 	printf("YES!\n");
+	// 	nbr = (unsigned short int)va_arg(argptr, unsigned int);
+	// 	printf("after: %jU\n", nbr);
+	// }
+	// else if (ft_strequ(tmp.cast, "hh") == 1)
+	// 	nbr = (unsigned char)va_arg(argptr, unsigned int);
+	// else if (ft_strequ(tmp.cast, "l") == 1)
+	// 	nbr = va_arg(argptr, unsigned long);
+	// else if (ft_strequ(tmp.cast, "ll") == 1)
+	// 	nbr = va_arg(argptr, unsigned long long);
+	// else if (ft_strequ(tmp.cast, "j") == 1)
+	// 	nbr = va_arg(argptr, uintmax_t);
+	// else if (ft_strequ(tmp.cast, "z") == 1)
+	// 	nbr = va_arg(argptr, size_t);
 	// else if (ft_strcmp(tmp.cast, "l") == 1)
 	// 	nbr = va_arg(argptr, long);
 	// else if (ft_strcmp(tmp.cast, "ll") == 1)
@@ -48,7 +52,7 @@ int	type_U(va_list argptr, t_pattern tmp)
 	// 	nbr = va_arg(argptr, size_t);
 
 	spaces = new_spaces();
-	str = itoa_base(nbr, 10, 0);
+	str = ft_itoa(nbr);
 	// printf("check: %s\n", str);
 	
 

@@ -48,7 +48,7 @@ int		ft_atoi(const char *str);
 char	*ft_itoa(intmax_t number);
 int		ft_countdigits(intmax_t n);
 int		ft_isdigit(int c);
-void	ft_putchar(char c);
+void	ft_putchar(int c);
 void	ft_putstr(char const *s);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_strequ(char const *s1, char const *s2);
@@ -56,6 +56,8 @@ char	*ft_strdup(const char *s1);
 char	*ft_strnew(size_t size);
 size_t	ft_strlen(const char *s); //what about size_t?
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_itoa_uint(uintmax_t number);
+int		ft_countdigits_uint(uintmax_t n);
 
 int	type_o(va_list argptr, t_pattern tmp);
 int	type_hex(va_list argptr, t_pattern tmp);
@@ -65,6 +67,7 @@ int	type_c(va_list argptr, t_pattern tmp);
 int	type_persent(va_list argptr, t_pattern tmp);
 int	type_unsigned(va_list argptr, t_pattern tmp);
 int	type_U(va_list argptr, t_pattern tmp);
+int	type_unicode(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 

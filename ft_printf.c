@@ -94,7 +94,7 @@ void	put_to_value(t_pattern *tmp, char flag)
 
 int	print(va_list argptr, t_pattern tmp)
 {
-	if (tmp.type == 's' || tmp.type == 'S')
+	if (tmp.type == 's')
 		return(type_s(argptr, tmp));
 	else if (tmp.type == 'c' || tmp.type == 'C')
 		return(type_c(argptr, tmp));

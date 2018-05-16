@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "printf.h"
+#include <locale.h>
 
 int	main(void)
 {
@@ -49,11 +50,17 @@ int	main(void)
 	// value = ft_printf("%d % 10.5%@", j); printf(" VALUE: %d\n", value);
 	// j++;
 
-	//    printf("or: %U\n", 42949672961);
-	// ft_printf("my: %U\n", 42949672961);
+	//    printf("or: %lu\n", -42);
+	// ft_printf("my: %lu\n", -42);
 
-	//    printf("or: %hU\n", 42949672961);
-	// ft_printf("my: %hU\n", 42949672961);
+	//    printf("or: %lu\n", -42);
+	// ft_printf("my: %lu\n", -42);
+	char* l = setlocale(LC_ALL, "");
+	ft_printf("%C\n", 24000);
+	   printf("%C\n", 24000);
+
+	//    printf("or: %hU\n", -42);
+	// ft_printf("my: %hU\n", -42);
 
 	//    printf("or: %hhU\n", 42949672961);
 	// ft_printf("my: %hhU\n", 42949672961);

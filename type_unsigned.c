@@ -38,6 +38,8 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 		nbr = va_arg(argptr, uintmax_t);
 	else if (ft_strequ(tmp.cast, "z") == 1)
 		nbr = va_arg(argptr, size_t);
+
+	// printf("%ju\n", nbr);
 	// else if (ft_strcmp(tmp.cast, "l") == 1)
 	// 	nbr = va_arg(argptr, long);
 	// else if (ft_strcmp(tmp.cast, "ll") == 1)
@@ -48,7 +50,7 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 	// 	nbr = va_arg(argptr, size_t);
 
 	spaces = new_spaces();
-	str = ft_itoa(nbr);
+	str = ft_itoa_uint(nbr);
 	// printf("%s\n", str);
 	
 

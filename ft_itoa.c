@@ -53,3 +53,24 @@ char			*ft_itoa(intmax_t number)
 	fill(number, a, len);
 	return (a);
 }
+
+char			*ft_itoa_uint(uintmax_t number)
+{
+	char	*a;
+	int		len;
+
+	len = ft_countdigits_uint(number);
+	a = ft_strnew(len);
+	if (!a)
+		return (0);
+	if (number == 0)
+		a[0] = '0';
+	a[len--] = '\0';
+	while (number > 0)
+	{
+		a[len] = number % 10 + '0';
+		number /= 10;
+		len--;
+	}
+	return (a);
+}

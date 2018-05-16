@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar.c                                       :+:      :+:    :+:   */
+/*   type_unicode.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/27 14:30:02 by osamoile          #+#    #+#             */
-/*   Updated: 2018/03/27 14:30:04 by osamoile         ###   ########.fr       */
+/*   Created: 2018/05/10 13:01:44 by osamoile          #+#    #+#             */
+/*   Updated: 2018/05/10 13:01:47 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,23 @@
 #define _11100000 224
 #define _11110000 240
 
-void	ft_putchar(int c)
+int	type_unicode(va_list argptr, t_pattern tmp)
 {
+	int				c;
 	unsigned char	code[4];
 
+	c = va_arg(argptr, int);
 	if (c <= _7bits || MB_CUR_MAX != 4)
 	{
 		write(1, &c, 1);
-		// return (1);
+		return (1);
 	}
 	else if (c <= _11bits)
 	{
 		code[0] = (c >> 6 & _00011111) | _11000000;
 		code[1] = (c & _00111111) | _10000000;
 		write(1, &code, 2);
-		// return (2);
+		return (2);
 	}
 	else if (c <= _16bits)
 	{
@@ -46,7 +48,7 @@ void	ft_putchar(int c)
 		code[1] = (c >> 6 & _00111111) | _10000000;
 		code[2] = (c & _00111111) | _10000000;
 		write(1, &code, 3);
-		// return (3);
+		return (3);
 	}
 	else
 	{
@@ -55,6 +57,6 @@ void	ft_putchar(int c)
 		code[2] = (c >> 6 & _00111111) | _10000000;
 		code[3] = (c & _00111111) | _10000000;
 		write(1, &code, 4);
-		// return (4);
+		return (4);
 	}
 }
