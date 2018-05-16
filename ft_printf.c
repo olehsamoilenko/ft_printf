@@ -108,8 +108,8 @@ int	print(va_list argptr, t_pattern tmp)
 		return(type_o(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X')
 		return(type_hex(argptr, tmp));
-	else if (tmp.type == '%')
-		return(type_persent(argptr, tmp));
+	// else if (tmp.type == '%')
+	// 	return(type_persent(argptr, tmp));
 	else
 		return (100500);
 }
