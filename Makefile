@@ -10,6 +10,7 @@ SRC =	ft_printf.c \
 		type_hex.c \
 		type_integer.c \
 		type_s.c \
+		type_SS.c \
 		type_c.c \
 		type_percent.c \
 		type_unsigned.c \

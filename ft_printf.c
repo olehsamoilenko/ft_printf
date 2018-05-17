@@ -95,10 +95,9 @@ void	put_to_value(t_pattern *tmp, char flag)
 int	print(va_list argptr, t_pattern tmp)
 {
 	if (tmp.type == 's')
-	{
-		// ft_putstr("hello\n");
 		return(type_s(argptr, tmp));
-	}
+	else if (tmp.type == 'S')
+		return(type_SS(argptr, tmp));
 	else if (tmp.type == 'c' || tmp.type == 'C')
 		return(type_c(argptr, tmp));
 	else if (tmp.type == 'd' || tmp.type == 'i' || tmp.type == 'D')
@@ -182,7 +181,7 @@ int	ft_printf(const char *format, ...)
 				sum += print(argptr, tmp);
 			}
 			else
-				return (0);
+				i--;
 		}
 
 		else

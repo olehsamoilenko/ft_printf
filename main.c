@@ -15,20 +15,28 @@
 
 int	main(void)
 {
-	// char* l = setlocale(LC_ALL, "");
+	char* l = setlocale(LC_ALL, "");
 
-	int i;
-	unsigned long l;
-	char *str;
+	// int i;
+	// unsigned long l;
+	// char *str;
+	//    printf("%p\n", &i);
+	// ft_printf("%p\n", &i);
+	//    printf("%p\n", &l);
+	// ft_printf("%p\n", &l);
+	//    printf("%p\n", &str);
+	// ft_printf("%p\n", &str);
+	//    printf("%p\n", 0);
+	// ft_printf("%p\n", 0);
 
+	char *s = 0;
+	int res = printf("%S\n", s);
+	printf("%d\n", res);
 
-	ft_printf("%p\n", &i);
-	   printf("%p\n", &l);
-	ft_printf("%p\n", &l);
-	   printf("%p\n", &str);
-	ft_printf("%p\n", &str);
-	   printf("%p\n", 0);
-	ft_printf("%p\n", 0);
+	//    printf("or: %S\n", L"米");
+	// ft_printf("my: %S\n", L"米");
+	//    printf("or: %s\n", "aaabc");
+	// ft_printf("my: %s\n", "aaabc");
 
 	return (0);
 

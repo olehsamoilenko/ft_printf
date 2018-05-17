@@ -19,11 +19,11 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	t_spaces spaces;
 
 	if (ft_strequ(tmp.cast, 0) == 1)
-		nbr = (unsigned int)va_arg(argptr, size_t);
+		nbr = (unsigned int)va_arg(argptr, unsigned long);
 	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (unsigned short)va_arg(argptr, unsigned int);
+		nbr = (unsigned short)va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (unsigned char)va_arg(argptr, unsigned int);
+		nbr = (unsigned char)va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "l") == 1)
 		nbr = va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "ll") == 1)
