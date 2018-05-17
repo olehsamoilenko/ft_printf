@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "printf.h"
+#define _7bits 127
+#define _11bits 2047
+#define _16bits 65535
 
 int	type_c(va_list argptr, t_pattern tmp)
 {
@@ -34,10 +37,19 @@ int	type_c(va_list argptr, t_pattern tmp)
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
+
+	if (c <= _7bits || MB_CUR_MAX != 4)
+		res = 1;
+	else if (c <= _11bits)
+		res = 2;
+	else if (c <= _16bits)
+		res = 3;
+	else
+		res = 4;
 	// while (spaces.zeroes-- > 0)
 	// 	str = ft_strjoin("0", str);
 	// str = ft_strjoin(spaces.prefix, str);
-	res = spaces.start + 1 + spaces.end;
+	res = res + spaces.start + spaces.end;
 	while (spaces.start-- > 0)
 		ft_putchar(' ');
 		// str = ft_strjoin(" ", str);

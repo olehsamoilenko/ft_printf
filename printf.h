@@ -67,7 +67,6 @@ int	type_c(va_list argptr, t_pattern tmp);
 int	type_persent(va_list argptr, t_pattern tmp);
 int	type_unsigned(va_list argptr, t_pattern tmp);
 int	type_U(va_list argptr, t_pattern tmp);
-int	type_unicode(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 
@@ -75,5 +74,6 @@ void	tests_o(void);
 void	tests_hex(void);
 void	tests_integer(void);
 void	tests_c(void);
+void	show_tmp(t_pattern tmp);
 
 #endif

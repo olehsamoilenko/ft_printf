@@ -17,12 +17,14 @@ int	type_s(va_list argptr, t_pattern tmp)
 	char *str;
 	t_spaces spaces;
 
+	// show_tmp(tmp);
+
 	str = va_arg(argptr, char*);
 	if (str == 0)
 		str = ft_strdup("(null)");
 	spaces = new_spaces();
 	
-	if (tmp.precision != 0)
+	if (tmp.precision > 0)
 		str = ft_strsub(str, 0, tmp.precision);
 	// spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)

@@ -12,13 +12,6 @@
 
 #include "printf.h"
 
-// unsigned int	cast_hex(va_list argptr, t_pattern tmp)
-// {
-// 	unsigned int res;
-
-	
-// }
-
 int	type_hex(va_list argptr, t_pattern tmp)
 {
 	intmax_t nbr;
@@ -26,17 +19,17 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	t_spaces spaces;
 
 	if (ft_strequ(tmp.cast, 0) == 1)
-		nbr = va_arg(argptr, unsigned int);
+		nbr = (unsigned int)va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (short)va_arg(argptr, int);
+		nbr = (unsigned short)va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (char)va_arg(argptr, int);
+		nbr = (unsigned char)va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, long);
+		nbr = va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "ll") == 1)
-		nbr = va_arg(argptr, long long);
+		nbr = va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "j") == 1)
-		nbr = va_arg(argptr, intmax_t);
+		nbr = va_arg(argptr, size_t);
 	else if (ft_strequ(tmp.cast, "z") == 1)
 		nbr = va_arg(argptr, size_t);
 	// else if (ft_strcmp(tmp.cast, "hh") == 1)
@@ -52,7 +45,7 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	// else if (ft_strcmp(tmp.cast, "z") == 1)
 	// 	nbr = va_arg(argptr, size_t);
 
-	if (tmp.type == 'x')
+	if (tmp.type == 'x' || tmp.type == 'p')
 		str = itoa_base(nbr, 16, 0);
 	else if (tmp.type == 'X')
 		str = itoa_base(nbr, 16, 1);
@@ -65,9 +58,9 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.hash == 1 && nbr > 0/*&& spaces.zeroes == 0*/)
+	if ((tmp.hash == 1 && nbr > 0) || tmp.type == 'p')
 	{
-		if (tmp.type == 'x')
+		if (tmp.type == 'x' || tmp.type == 'p')
 			spaces.prefix = "0x";
 		else if (tmp.type == 'X')
 			spaces.prefix = "0X";

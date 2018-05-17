@@ -14,7 +14,6 @@ SRC =	ft_printf.c \
 		type_percent.c \
 		type_unsigned.c \
 		type_U.c \
-		type_unicode.c \
 		ft_atoi.c \
 		ft_isdigit.c \
 		ft_itoa.c \

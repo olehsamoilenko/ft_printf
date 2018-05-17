@@ -18,7 +18,7 @@ int	type_persent(va_list argptr, t_pattern tmp)
 	char *str;
 	t_spaces spaces;
 
-	str = "%";
+	str = ft_strdup("%");
 	spaces = new_spaces();
 	spaces.start = tmp.width - ft_strlen(str);
 	if (spaces.start < 0)
@@ -28,15 +28,7 @@ int	type_persent(va_list argptr, t_pattern tmp)
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
-	if (tmp.zero == 1)
-	{
-		spaces.zeroes += spaces.start;
-		spaces.start = 0;
-	}
 
-	while (spaces.zeroes-- > 0)
-		str = ft_strjoin("0", str);
-	str = ft_strjoin(spaces.prefix, str);
 	while (spaces.start-- > 0)
 		str = ft_strjoin(" ", str);
 	while (spaces.end-- > 0)

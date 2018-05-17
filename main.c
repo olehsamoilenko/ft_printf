@@ -15,76 +15,21 @@
 
 int	main(void)
 {
-	// tests_o();
-	// tests_hex();
-	// tests_integer();
-	// tests_s();
-	// tests_c();
-	int i = 200;
-	int value;
-	int j = 0;
-	// printf("%d %D %O %U\n", i, i, i);
-	// printf("%d %#D %#O %#U\n", i, i, i);
-	// printf("%d % D % O % U\n", i, i, i);
-	// printf("%d %+D %+O %+U\n", i, i, i);
-	// printf("%d %-D %-O %-U\n", i, i, i);
-	// printf("%d %0D %0O %0U\n", i, i, i);
+	// char* l = setlocale(LC_ALL, "");
 
-	// ft_printf("--------------- %% ---------------\n");
-	// value = printf("%d %.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d %.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-	// value = printf("%d %#10.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d %#10.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-	// value = printf("%d %010.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d %010.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-	// value = printf("%d %-10.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d %-10.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-	// value = printf("%d %+10.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d %+10.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-	// value = printf("%d % 10.5%@", j); printf(" VALUE: %d\n", value);
-	// value = ft_printf("%d % 10.5%@", j); printf(" VALUE: %d\n", value);
-	// j++;
-
-	//    printf("or: %lu\n", -42);
-	// ft_printf("my: %lu\n", -42);
-
-	//    printf("or: %lu\n", -42);
-	// ft_printf("my: %lu\n", -42);
-	char* l = setlocale(LC_ALL, "");
-	ft_printf("%C\n", 24000);
-	   printf("%C\n", 24000);
-
-	//    printf("or: %hU\n", -42);
-	// ft_printf("my: %hU\n", -42);
-
-	//    printf("or: %hhU\n", 42949672961);
-	// ft_printf("my: %hhU\n", 42949672961);
-
-	//    printf("or: %lU\n", 4294967296);
-	// ft_printf("my: %lU\n", 4294967296);
-
-	//    printf("or: %llU\n", 4294967296);
-	// ft_printf("my: %llU\n", 4294967296);
-	
-	//    printf("or: %jU\n", 4294967296);
-	// ft_printf("my: %jU\n", 4294967296);
-	
-	//    printf("or: %zU\n", 4294967296);
-	// ft_printf("my: %zU\n", 4294967296);
-	// ft_printf("%x", -42);
-	// ft_printf("%u\n", -1);
-
-		
-	// printf("%");
-	// printf("%abc");
+	int i;
+	unsigned long l;
+	char *str;
 
 
-	// printf("%d %-.12#034+qq q\n", 123);
+	ft_printf("%p\n", &i);
+	   printf("%p\n", &l);
+	ft_printf("%p\n", &l);
+	   printf("%p\n", &str);
+	ft_printf("%p\n", &str);
+	   printf("%p\n", 0);
+	ft_printf("%p\n", 0);
+
 	return (0);
 
 }

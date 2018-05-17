@@ -56,7 +56,7 @@ int is_type(char c)
 	if (c == 's' || c == 'S' || c == 'p' || c == 'd' ||
 		c == 'D' || c == 'i' || c == 'o' || c == 'O' ||
 		c == 'u' || c == 'U' || c == 'x' || c == 'X' ||
-		c == 'c' || c == 'C')
+		c == 'c' || c == 'C' || c == '%')
 		return (1);
 	else
 		return (0);
@@ -95,7 +95,10 @@ void	put_to_value(t_pattern *tmp, char flag)
 int	print(va_list argptr, t_pattern tmp)
 {
 	if (tmp.type == 's')
+	{
+		// ft_putstr("hello\n");
 		return(type_s(argptr, tmp));
+	}
 	else if (tmp.type == 'c' || tmp.type == 'C')
 		return(type_c(argptr, tmp));
 	else if (tmp.type == 'd' || tmp.type == 'i' || tmp.type == 'D')
@@ -106,10 +109,10 @@ int	print(va_list argptr, t_pattern tmp)
 		return (type_U(argptr, tmp));
 	else if (tmp.type == 'o' || tmp.type == 'O')
 		return(type_o(argptr, tmp));
-	else if (tmp.type == 'x' || tmp.type == 'X')
+	else if (tmp.type == 'x' || tmp.type == 'X' || tmp.type == 'p')
 		return(type_hex(argptr, tmp));
-	// else if (tmp.type == '%')
-	// 	return(type_persent(argptr, tmp));
+	else if (tmp.type == '%')
+		return(type_persent(argptr, tmp));
 	else
 		return (100500);
 }
@@ -140,48 +143,48 @@ int	ft_printf(const char *format, ...)
 		{
 			tmp = new_value();
 			i++;
-			while (1)
+
+			while (is_flag(format[i]))
 			{
-				if (is_flag(format[i]))
-				{
-					put_to_value(&tmp, format[i++]);
-				}
-				else if (ft_isdigit(format[i]))
-				{
-					start = i;
-					while (ft_isdigit(format[i]))
-						i++;
-					tmp.width = ft_atoi(ft_strsub(format, start, i - start));
-				}
-				else if (format[i] == '.')
-				{
-					i++;
-					start = i;
-					while (ft_isdigit(format[i]))
-						i++;
-					buf = ft_atoi(ft_strsub(format, start, i - start));
-					if (buf != 0) /* ("%.d",0) = " " */
-						tmp.precision = buf;
-					else
-						tmp.precision = -1;
-					
-				}
-				else if (is_cast(format[i]))
-				{
-					start = i;
-					while (is_cast(format[i]))
-						i++;
-					tmp.cast = ft_strsub(format, start, i - start);
-				}
-				else
-				{
-					tmp.type = format[i];
-					break ;
-				}
+				put_to_value(&tmp, format[i++]);
 			}
-			sum += print(argptr, tmp);
-			// show_tmp(tmp);
+			while (ft_isdigit(format[i]))
+			{
+				start = i;
+				while (ft_isdigit(format[i]))
+					i++;
+				tmp.width = ft_atoi(ft_strsub(format, start, i - start));
+			}
+			if (format[i] == '.')
+			{
+				i++;
+				start = i;
+				while (ft_isdigit(format[i]))
+					i++;
+				buf = ft_atoi(ft_strsub(format, start, i - start));
+				if (buf != 0) /* ("%.d",0) = " " */
+					tmp.precision = buf;
+				else
+					tmp.precision = -1;
+				
+			}
+			while (is_cast(format[i]))
+			{
+				start = i;
+				while (is_cast(format[i]))
+					i++;
+				tmp.cast = ft_strsub(format, start, i - start);
+			}
+			// printf("hello\n");
+			if (is_type(format[i]))
+			{
+				tmp.type = format[i];
+				sum += print(argptr, tmp);
+			}
+			else
+				return (0);
 		}
+
 		else
 		{
 			ft_putchar(format[i]);
