@@ -18,14 +18,14 @@ int	type_integer(va_list argptr, t_pattern tmp)
 	char *str;
 	t_spaces spaces;
 
-	if (ft_strequ(tmp.cast, 0) == 1)
+	if (ft_strequ(tmp.cast, "l") == 1 || tmp.type == 'D')
+		nbr = va_arg(argptr, long);
+	else if (ft_strequ(tmp.cast, 0) == 1)
 		nbr = va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "h") == 1)
 		nbr = (short)va_arg(argptr, int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
 		nbr = (char)va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, long);
 	else if (ft_strequ(tmp.cast, "ll") == 1)
 		nbr = va_arg(argptr, long long);
 	else if (ft_strequ(tmp.cast, "j") == 1)

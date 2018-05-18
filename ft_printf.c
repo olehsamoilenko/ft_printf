@@ -94,18 +94,14 @@ void	put_to_value(t_pattern *tmp, char flag)
 
 int	print(va_list argptr, t_pattern tmp)
 {
-	if (tmp.type == 's')
+	if (tmp.type == 's' || tmp.type == 'S')
 		return(type_s(argptr, tmp));
-	else if (tmp.type == 'S')
-		return(type_SS(argptr, tmp));
 	else if (tmp.type == 'c' || tmp.type == 'C')
 		return(type_c(argptr, tmp));
 	else if (tmp.type == 'd' || tmp.type == 'i' || tmp.type == 'D')
 		return(type_integer(argptr, tmp));
-	else if (tmp.type == 'u')
+	else if (tmp.type == 'u' || tmp.type == 'U')
 		return(type_unsigned(argptr, tmp));
-	else if (tmp.type == 'U')
-		return (type_U(argptr, tmp));
 	else if (tmp.type == 'o' || tmp.type == 'O')
 		return(type_o(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X' || tmp.type == 'p')
@@ -181,7 +177,29 @@ int	ft_printf(const char *format, ...)
 				sum += print(argptr, tmp);
 			}
 			else
-				i--;
+			{
+				// i--;
+				// sum += tmp.width;
+				while (tmp.minus == 0 && --tmp.width > 0)
+				{
+					sum += 1;
+					ft_putchar(' ');
+					
+				}
+				if (format[i] != '\0')
+				{
+					write(1, format[i], 1);
+					sum += 1;
+					// i++;
+				}
+				while (tmp.minus == 1 && --tmp.width > 0)
+				{
+					sum += 1;
+					ft_putchar(' ');
+				}
+				
+				
+			}
 		}
 
 		else

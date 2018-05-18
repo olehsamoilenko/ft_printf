@@ -63,11 +63,9 @@ int	type_o(va_list argptr, t_pattern tmp);
 int	type_hex(va_list argptr, t_pattern tmp);
 int	type_integer(va_list argptr, t_pattern tmp);
 int type_s(va_list argptr, t_pattern tmp);
-int	type_SS(va_list argptr, t_pattern tmp);
 int	type_c(va_list argptr, t_pattern tmp);
 int	type_persent(va_list argptr, t_pattern tmp);
 int	type_unsigned(va_list argptr, t_pattern tmp);
-int	type_U(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 

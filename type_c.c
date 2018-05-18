@@ -32,6 +32,11 @@ int	type_c(va_list argptr, t_pattern tmp)
 		spaces.start--;
 	if (spaces.start < 0)
 		spaces.start = 0;
+	if (tmp.zero == 1)
+	{
+		spaces.zeroes = spaces.start;
+		spaces.start = 0;
+	}
 	if (tmp.minus == 1)
 	{
 		spaces.end = spaces.start;
@@ -46,12 +51,15 @@ int	type_c(va_list argptr, t_pattern tmp)
 	// 	res = 3;
 	// else
 	// 	res = 4;
+	// show_tmp(tmp);
 	// while (spaces.zeroes-- > 0)
 	// 	str = ft_strjoin("0", str);
 	// str = ft_strjoin(spaces.prefix, str);
-	res = spaces.start + spaces.end;
+	res = spaces.start + spaces.zeroes + spaces.end;
 	while (spaces.start-- > 0)
 		ft_putchar(' ');
+	while (spaces.zeroes-- > 0)
+		ft_putchar('0');
 		// str = ft_strjoin(" ", str);
 	res += ft_putchar(c);
 	while (spaces.end-- > 0)

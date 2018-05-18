@@ -13,6 +13,7 @@
 #include "printf.h"
 
 #define _7bits 127 /* 01111111 */
+#define _8bits 255
 #define _11bits 2047 /* 00000111 11111111 */
 #define _16bits 65535 /* 11111111 11111111 */
 #define _00000111 7
@@ -24,11 +25,11 @@
 #define _11100000 224
 #define _11110000 240
 
-int	ft_putchar(int c)
+int	ft_putchar(wchar_t c)
 {
 	unsigned char	code[4];
 
-	if (c <= _7bits || MB_CUR_MAX != 4)
+	if (c <= _8bits || MB_CUR_MAX != 4)
 	{
 		write(1, &c, 1);
 		return (1);

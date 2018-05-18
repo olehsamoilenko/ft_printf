@@ -24,14 +24,15 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 	// 	nbr = (unsigned int)va_arg(argptr, unsigned int);
 	// else if (ft_strcmp(tmp.cast, "hh") == 1)
 	// 	nbr = (char)va_arg(argptr, int);
-	if (ft_strequ(tmp.cast, 0) == 1)
+	if (ft_strequ(tmp.cast, "l") == 1 || tmp.type == 'U')
+		nbr = va_arg(argptr, unsigned long);
+	else if (ft_strequ(tmp.cast, 0) == 1)
 		nbr = va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "h") == 1)
 		nbr = (unsigned short)va_arg(argptr, unsigned int);
 	else if (ft_strequ(tmp.cast, "hh") == 1)
 		nbr = (unsigned char)va_arg(argptr, unsigned int);
-	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, unsigned long);
+	
 	else if (ft_strequ(tmp.cast, "ll") == 1)
 		nbr = va_arg(argptr, unsigned long long);
 	else if (ft_strequ(tmp.cast, "j") == 1)
@@ -51,6 +52,9 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 
 	spaces = new_spaces();
 	str = ft_itoa_uint(nbr);
+
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
 	// printf("%s\n", str);
 	
 

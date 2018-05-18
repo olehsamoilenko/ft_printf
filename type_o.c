@@ -25,15 +25,34 @@ t_spaces	new_spaces(void)
 
 int	type_o(va_list argptr, t_pattern tmp)
 {
-	int nbr;
+	uintmax_t nbr;
 	char *str;
 	t_spaces spaces;
 
-	nbr = va_arg(argptr, int);
+	if (tmp.type == 'O')
+		nbr = va_arg(argptr, unsigned long);
+	else if (ft_strequ(tmp.cast, "h") == 1)
+		nbr = (unsigned short)va_arg(argptr, size_t);
+	else if (ft_strequ(tmp.cast, "hh") == 1)
+		nbr = (unsigned char)va_arg(argptr, size_t);
+	else if (ft_strequ(tmp.cast, "l") == 1)
+		nbr = va_arg(argptr, unsigned long);
+	else if (ft_strequ(tmp.cast, "ll") == 1)
+		nbr = va_arg(argptr, long long);
+	else if (ft_strequ(tmp.cast, "j") == 1)
+		nbr = va_arg(argptr, intmax_t);
+	else if (ft_strequ(tmp.cast, "z") == 1)
+		nbr = va_arg(argptr, size_t);
+	else
+		nbr = va_arg(argptr, unsigned int);
+	
+
 	str = itoa_base(nbr, 8, 0);
 	if (nbr == 0 && tmp.precision == -1)
 		str = ft_strdup("");
 	spaces = new_spaces();
+
+	// show_tmp(tmp);
 	
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
@@ -41,7 +60,7 @@ int	type_o(va_list argptr, t_pattern tmp)
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.hash == 1 && spaces.zeroes == 0)
+	if (tmp.hash == 1 && str[0] != '0' && spaces.zeroes == 0)
 	{
 		// spaces.octal += 1;
 		spaces.prefix = "0";
