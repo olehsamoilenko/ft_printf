@@ -44,8 +44,8 @@ int	main(void)
 		// ft_printf("%C\n", str[i]);
 		// printf("%d\n", str[i]);
 
-	res =    printf("{%05s}", "abc"); printf(" res: %d\n", res);
-	res = ft_printf("{%05s}", "abc"); printf(" res: %d\n", res);
+	res =    printf("%015Z", "abc"); printf(" res: %d\n", res);
+	res = ft_printf("%015Z", "abc"); printf(" res: %d\n", res);
 
 	// res =    printf("%c", 200); printf(" res: %d\n", res);
 	// res = ft_printf("%c", 200); printf(" res: %d\n", res);

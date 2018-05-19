@@ -33,16 +33,17 @@ int	print_c(int c, t_pattern tmp)
 		spaces.start--;
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if (tmp.zero == 1)
-	{
-		spaces.zeroes = spaces.start;
-		spaces.start = 0;
-	}
 	if (tmp.minus == 1)
 	{
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
+	if (tmp.zero == 1)
+	{
+		spaces.zeroes = spaces.start;
+		spaces.start = 0;
+	}
+
 
 	res = spaces.start + spaces.zeroes + spaces.end;
 	while (spaces.start-- > 0)

@@ -106,11 +106,6 @@ int	print(va_list argptr, t_pattern tmp)
 		return(type_o(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X' || tmp.type == 'p')
 		return(type_hex(argptr, tmp));
-	// else if (tmp.type == '%')
-	// 	return (print_c('%', tmp));
-		// return(type_persent(argptr, tmp));
-	// else if (tmp.type == '\0')
-	// 	return (0);
 	else
 		return (100500);
 }
@@ -187,29 +182,7 @@ int	ft_printf(const char *format, ...)
 				if (format[i] == '\0')
 					return (0);
 				sum += print_c(format[i], tmp);
-				// show_tmp(tmp);
-				// if (tmp.minus == 0)
-				// 	while (--tmp.width > 0)
-				// 	{
-				// 		sum += 1;
-				// 		ft_putchar(' ');
-				// 	}
 
-				
-				// if (format[i] == '\0')
-				// 	return (0);
-				// else
-				// {
-				// 	ft_putchar(format[i]);
-				// 	sum += 1;
-				// }
-				// if (tmp.minus == 1)
-				// 	while (--tmp.width > 0)
-				// 	{
-				// 		sum += 1;
-				// 		ft_putchar(' ');
-				// 	}
-				// i--;
 
 			}
 			// show_tmp(tmp);
