@@ -11,7 +11,6 @@ SRC =	ft_printf.c \
 		type_integer.c \
 		type_s.c \
 		type_c.c \
-		type_percent.c \
 		type_unsigned.c \
 		ft_atoi.c \
 		ft_isdigit.c \
@@ -25,13 +24,6 @@ SRC =	ft_printf.c \
 		ft_putchar.c \
 		ft_putstr.c \
 		ft_strequ.c
-
-TESTS = main.c \
-		tests_o.c \
-		tests_hex.c \
-		tests_integer.c \
-		tests_s.c \
-		tests_c.c
 
 all: $(NAME)
 

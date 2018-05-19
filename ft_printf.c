@@ -22,7 +22,7 @@ void	show_tmp(t_pattern tmp)
 	printf("width: %d\n", tmp.width);
 	printf("precision: %d\n", tmp.precision);
 	printf("cast: %s\n", tmp.cast);
-	printf("type: %c\n", tmp.type);
+	printf("type: %d %c\n", tmp.type, tmp.type);
 }
 
 t_pattern new_value(void)
@@ -56,7 +56,7 @@ int is_type(char c)
 	if (c == 's' || c == 'S' || c == 'p' || c == 'd' ||
 		c == 'D' || c == 'i' || c == 'o' || c == 'O' ||
 		c == 'u' || c == 'U' || c == 'x' || c == 'X' ||
-		c == 'c' || c == 'C' || c == '%')
+		c == 'c' || c == 'C')
 		return (1);
 	else
 		return (0);
@@ -106,8 +106,11 @@ int	print(va_list argptr, t_pattern tmp)
 		return(type_o(argptr, tmp));
 	else if (tmp.type == 'x' || tmp.type == 'X' || tmp.type == 'p')
 		return(type_hex(argptr, tmp));
-	else if (tmp.type == '%')
-		return(type_persent(argptr, tmp));
+	// else if (tmp.type == '%')
+	// 	return (print_c('%', tmp));
+		// return(type_persent(argptr, tmp));
+	// else if (tmp.type == '\0')
+	// 	return (0);
 	else
 		return (100500);
 }
@@ -134,6 +137,7 @@ int	ft_printf(const char *format, ...)
 	sum = 0;
 	while (format[++i])
 	{
+		// printf("check %d\n", i);
 		if (format[i] == '%') /* qualifier */
 		{
 			tmp = new_value();
@@ -171,35 +175,45 @@ int	ft_printf(const char *format, ...)
 				tmp.cast = ft_strsub(format, start, i - start);
 			}
 			// printf("hello\n");
+			// printf("check %d\n", format[i]);
 			if (is_type(format[i]))
 			{
 				tmp.type = format[i];
+				// printf("YES!\n");
 				sum += print(argptr, tmp);
 			}
 			else
 			{
+				if (format[i] == '\0')
+					return (0);
+				sum += print_c(format[i], tmp);
+				// show_tmp(tmp);
+				// if (tmp.minus == 0)
+				// 	while (--tmp.width > 0)
+				// 	{
+				// 		sum += 1;
+				// 		ft_putchar(' ');
+				// 	}
+
+				
+				// if (format[i] == '\0')
+				// 	return (0);
+				// else
+				// {
+				// 	ft_putchar(format[i]);
+				// 	sum += 1;
+				// }
+				// if (tmp.minus == 1)
+				// 	while (--tmp.width > 0)
+				// 	{
+				// 		sum += 1;
+				// 		ft_putchar(' ');
+				// 	}
 				// i--;
-				// sum += tmp.width;
-				while (tmp.minus == 0 && --tmp.width > 0)
-				{
-					sum += 1;
-					ft_putchar(' ');
-					
-				}
-				if (format[i] != '\0')
-				{
-					write(1, format[i], 1);
-					sum += 1;
-					// i++;
-				}
-				while (tmp.minus == 1 && --tmp.width > 0)
-				{
-					sum += 1;
-					ft_putchar(' ');
-				}
-				
-				
+
 			}
+			// show_tmp(tmp);
+
 		}
 
 		else

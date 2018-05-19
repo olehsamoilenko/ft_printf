@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "printf.h"
+#define _7bits 127
+#define _11bits 2047
+#define _16bits 65535
 
 int	type_s(va_list argptr, t_pattern tmp)
 {
@@ -18,29 +21,56 @@ int	type_s(va_list argptr, t_pattern tmp)
 	t_spaces	spaces;
 	int			i;
 	int			res;
-	char c;
+	int len;
 
-	// if (tmp.type == 'S' || ft_strequ(tmp.cast, "l"))
+
 	str = va_arg(argptr, int*);
-	// else
-		// str = va_arg(argptr, int*);
-		
-
 	if (str == 0)
 	{
 		str = (int*)ft_strdup("(null)");
 		tmp.type = 's';
 	}
 	spaces = new_spaces();
+
+		
+
+	// printf("len: %d\n", len);
 	
 	
 	if (tmp.precision > 0)
 		str = (int*)ft_strsub((char*)str, 0, tmp.precision);
-	if (spaces.zeroes < 0)
-		spaces.zeroes = 0;
-	spaces.start = tmp.width /*- spaces.zeroes*/ - ft_strlen((char*)str);
+	if (tmp.precision == -1)
+		str = (int*)ft_strdup("");
+
+	if (tmp.type == 'S')
+	{
+		len = 0;
+		i = -1;
+		while (str[++i])
+		{
+			if (str[i] <= _7bits)
+				len += 1;
+			else if (str[i] <= _11bits)
+				len += 2;
+			else if (str[i] <= _16bits)
+				len += 3;
+			else
+				len += 4;
+		}
+	}
+	else
+		len = ft_strlen((char*)str);
+
+	// printf("check: %d\n", i);
+	// if (i != 0)
+	// 	spaces.zeroes = tmp.precision - i;
+	// if (spaces.zeroes < 0)
+	// 	spaces.zeroes = 0;
+	// printf("zero: %d\n", spaces.zeroes);
+	spaces.start = tmp.width - spaces.zeroes - len;
 	if (spaces.start < 0)
 		spaces.start = 0;
+	// printf("start: %d\n", i);
 	if (tmp.zero == 1)
 	{
 		spaces.zeroes = spaces.start;
@@ -51,40 +81,26 @@ int	type_s(va_list argptr, t_pattern tmp)
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
-	// res = 0;
-	// i = -1;
-	// while (str[++i])
-	// {
-	// 	res += ft_putchar(str[i]);
-	// }
-	
-	
-	// show_tmp(tmp);
-	// ft_printf("spaces.start: %d\n", spaces.start);
-	// ft_printf("spaces.end: %d\n", spaces.end);
-	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
-	
 
-	while (spaces.zeroes-- > 0)
-		str = (int*)ft_strjoin("0", (char*)str);
+	
+	res = 0;
 	while (spaces.start-- > 0)
-		str = (int*)ft_strjoin(" ", (char*)str);
-	while (spaces.end-- > 0)
-		str = (int*)ft_strjoin((char*)str, " ");
-	if (tmp.type == 'S' || tmp.cast == 'l')
+		res += ft_putchar(' ');
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	if (tmp.type == 'S' || ft_strequ(tmp.cast, "l") == 1)
 	{
-		res = 0;
 		i = -1;
-		// printf("HERE!\n");
-		// printf("%d\n", str[i]);
 		while (str[++i])
 			res += ft_putchar(str[i]);
-		return (res);
 	}
 	else
 	{
 		write(1, ((char*)str), ft_strlen((char*)(str)));
-		return (ft_strlen((char*)(str)));
+		res += ft_strlen((char*)(str));
 	}
+	while (spaces.end-- > 0)
+		res += ft_putchar(' ');
+	return (res);
 	// return(ft_strlen((char*)(str)));
 }

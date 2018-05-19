@@ -11,19 +11,20 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-// #define _7bits 127
-// #define _11bits 2047
-// #define _16bits 65535
 
-int	type_c(va_list argptr, t_pattern tmp)
+
+int	print_c(int c, t_pattern tmp)
 {
-	int c;
-	char *str;
-	t_spaces spaces;
-	int res;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
+	int			len;
+	int i;
 
-	// ft_putchar(c)
-	c = va_arg(argptr, int);
+
+
+	
+
 	str = ft_strnew(1);
 	str[0] = c;
 	spaces = new_spaces();
@@ -43,29 +44,26 @@ int	type_c(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	}
 
-	// if (c <= _7bits || MB_CUR_MAX != 4)
-	// 	res = 1;
-	// else if (c <= _11bits)
-	// 	res = 2;
-	// else if (c <= _16bits)
-	// 	res = 3;
-	// else
-	// 	res = 4;
-	// show_tmp(tmp);
-	// while (spaces.zeroes-- > 0)
-	// 	str = ft_strjoin("0", str);
-	// str = ft_strjoin(spaces.prefix, str);
 	res = spaces.start + spaces.zeroes + spaces.end;
 	while (spaces.start-- > 0)
 		ft_putchar(' ');
 	while (spaces.zeroes-- > 0)
 		ft_putchar('0');
 		// str = ft_strjoin(" ", str);
-	res += ft_putchar(c);
+	if (tmp.type == 'C' || ft_strequ(tmp.cast, "l") == 1)
+		res += ft_putchar(c);
+	else
+		res += ft_putchar((char)c);
 	while (spaces.end-- > 0)
 		ft_putchar(' ');
 		// str = ft_strjoin(str, " ");
-	
-	
-	return(res);
+	return (res);
+}
+
+int	type_c(va_list argptr, t_pattern tmp)
+{
+	int c;
+	c = va_arg(argptr, int);
+	return (print_c(c, tmp));
+
 }
