@@ -15,13 +15,26 @@
 #define _11bits 2047
 #define _16bits 65535
 
+int	get_size(int c)
+{
+	if (c <= _7bits)
+		return (1);
+	else if (c <= _11bits)
+		return (2);
+	else if (c <= _16bits)
+		return (3);
+	else
+		return (4);
+}
+
 int	type_s(va_list argptr, t_pattern tmp)
 {
 	int			*str;
 	t_spaces	spaces;
 	int			i;
 	int			res;
-	int len;
+	int 		len;
+	int			num;
 
 
 	str = va_arg(argptr, int*);
@@ -32,57 +45,67 @@ int	type_s(va_list argptr, t_pattern tmp)
 	}
 	spaces = new_spaces();
 
-		
-
-	// printf("len: %d\n", len);
-	
-	
-	if (tmp.precision > 0)
-		str = (int*)ft_strsub((char*)str, 0, tmp.precision);
 	if (tmp.precision == -1)
 		str = (int*)ft_strdup("");
 
-	if (tmp.type == 'S')
+	if (tmp.type == 'S' || ft_strequ(tmp.cast, "l") == 1)
 	{
 		len = 0;
 		i = -1;
+		num = 0;
 		while (str[++i])
 		{
-			if (str[i] <= _7bits)
-				len += 1;
-			else if (str[i] <= _11bits)
-				len += 2;
-			else if (str[i] <= _16bits)
-				len += 3;
+			if (tmp.precision > 0)
+			{
+				if (len + get_size(str[i]) <= tmp.precision)
+				{
+					len += get_size(str[i]);
+					num += 1;
+				}
+			}
 			else
-				len += 4;
+			{
+				len += get_size(str[i]);
+				num += 1;
+			}
 		}
+
 	}
 	else
+	{
+		if (tmp.precision > 0)
+			str = (int*)ft_strsub((char*)str, 0, tmp.precision);
 		len = ft_strlen((char*)str);
 
-	// printf("check: %d\n", i);
-	// if (i != 0)
-	// 	spaces.zeroes = tmp.precision - i;
-	// if (spaces.zeroes < 0)
-	// 	spaces.zeroes = 0;
-	// printf("zero: %d\n", spaces.zeroes);
+		// num = tmp.precision > len ? tmp.precision : len ;
+	}
+
+	// printf("len %d\n", len);
+	// printf("num %d\n", num);
+
+	// i = -1;
+	// while (str[++i])
+	// 	printf("%i\n", str[i]);
+
+	
+
+	
+
+
 	spaces.start = tmp.width - spaces.zeroes - len;
 	if (spaces.start < 0)
 		spaces.start = 0;
-	// printf("start: %d\n", i);
-	if (tmp.zero == 1)
-	{
-		spaces.zeroes = spaces.start;
-		spaces.start = 0;
-	}
 	if (tmp.minus == 1)
 	{
 		spaces.end = spaces.start;
 		spaces.start = 0;
 	}
+	if (tmp.zero == 1)
+	{
+		spaces.zeroes = spaces.start;
+		spaces.start = 0;
+	}
 
-	
 	res = 0;
 	while (spaces.start-- > 0)
 		res += ft_putchar(' ');
@@ -91,8 +114,10 @@ int	type_s(va_list argptr, t_pattern tmp)
 	if (tmp.type == 'S' || ft_strequ(tmp.cast, "l") == 1)
 	{
 		i = -1;
-		while (str[++i])
+		while (str[++i] && num-- > 0)
+		{
 			res += ft_putchar(str[i]);
+		}
 	}
 	else
 	{

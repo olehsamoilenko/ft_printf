@@ -15,9 +15,9 @@
 
 int	main(void)
 {
-	char* l = setlocale(LC_ALL, "");
+	// char* l = setlocale(LC_ALL, "");
 
-	int i;
+	// int i;
 	int res;
 	// unsigned long l;
 	// char *str;
@@ -36,7 +36,7 @@ int	main(void)
 	//    printf("or: %ls, %ls\n", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
 	// ft_printf("my: %ls, %ls\n", L"ÊM-^ZM-^VÁM-^BM-^I", L"ŸM-^Dÿ≠ŸM-^E ÿÆŸM-^Fÿ≤ŸM-ÿ±");
 
-	int *str = L"我是一只猫。";
+	// int *str = L"我是一只猫。";
 
 	// i = -1;
 	// while (str[++i])
@@ -44,8 +44,28 @@ int	main(void)
 		// ft_printf("%C\n", str[i]);
 		// printf("%d\n", str[i]);
 
-	res =    printf("%015Z", "abc"); printf(" res: %d\n", res);
-	res = ft_printf("%015Z", "abc"); printf(" res: %d\n", res);
+	// res =    printf("%5.2s is a string", "this"); printf(" res: %d\n", res);
+	// res = ft_printf("%5.2s is a string", "this"); printf(" res: %d\n", res);
+
+	// res =    printf("%10s is a string", "this"); printf(" res: %d\n", res);
+	// res = ft_printf("%10s is a string", "this"); printf(" res: %d\n", res);
+
+	// res =    printf("{%05.s}", "42 c est cool"); printf(" res: %d\n", res);
+	// res = ft_printf("{%05.s}", "42 c est cool"); printf(" res: %d\n", res);
+
+	// res =    printf("%"); printf(" res: %d\n", res);
+
+	res =    printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
+	res = ft_printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
+
+	res =    printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
+	res = ft_printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
+
+	res =    printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
+	res = ft_printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
+	
+	// res =    printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
+	// res = ft_printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
 
 	// res =    printf("%c", 200); printf(" res: %d\n", res);
 	// res = ft_printf("%c", 200); printf(" res: %d\n", res);

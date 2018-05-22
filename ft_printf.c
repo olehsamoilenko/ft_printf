@@ -137,54 +137,71 @@ int	ft_printf(const char *format, ...)
 		{
 			tmp = new_value();
 			i++;
-
-			while (is_flag(format[i]))
+			while (1)
 			{
-				put_to_value(&tmp, format[i++]);
-			}
-			while (ft_isdigit(format[i]))
-			{
-				start = i;
-				while (ft_isdigit(format[i]))
+				if (is_flag(format[i]))
+				{
+					put_to_value(&tmp, format[i++]);
+				}
+				if (format[i] >= '1' && format[i] <= '9')
+				{
+					start = i;
+					while (ft_isdigit(format[i]))
+						i++;
+					tmp.width = ft_atoi(ft_strsub(format, start, i - start));
+				}
+				if (format[i] == '.')
+				{
 					i++;
-				tmp.width = ft_atoi(ft_strsub(format, start, i - start));
-			}
-			if (format[i] == '.')
-			{
-				i++;
-				start = i;
-				while (ft_isdigit(format[i]))
-					i++;
-				buf = ft_atoi(ft_strsub(format, start, i - start));
-				if (buf != 0) /* ("%.d",0) = " " */
-					tmp.precision = buf;
-				else
-					tmp.precision = -1;
-				
-			}
-			while (is_cast(format[i]))
-			{
-				start = i;
-				while (is_cast(format[i]))
-					i++;
-				tmp.cast = ft_strsub(format, start, i - start);
-			}
-			// printf("hello\n");
-			// printf("check %d\n", format[i]);
-			if (is_type(format[i]))
-			{
-				tmp.type = format[i];
-				// printf("YES!\n");
-				sum += print(argptr, tmp);
-			}
-			else
-			{
-				if (format[i] == '\0')
-					return (0);
-				sum += print_c(format[i], tmp);
+					start = i;
+					while (ft_isdigit(format[i]))
+						i++;
+					buf = ft_atoi(ft_strsub(format, start, i - start));
+					if (buf != 0) /* ("%.d",0) = " " */
+						tmp.precision = buf;
+					else
+						tmp.precision = -1;
+					
+				}
+				if (is_cast(format[i]))
+				{
+					// start = i;
+					if (format[i] == 'z')
+						tmp.cast = "z";
+					else if (format[i] == 'j')
+						tmp.cast = "j";
+					else if (format[i] == 'l' && format[i + 1] == 'l')
+						tmp.cast = "ll";
+					else if (format[i] == 'l')
+						tmp.cast = "l";
+					else if (format[i] == 'h' && format[i + 1] == 'h')
+						tmp.cast = "hh";
+					else if (format[i] == 'h')
+						tmp.cast = "h";
+					i += ft_strlen(tmp.cast);
+					// while (is_cast(format[i]))
+					// 	i++;
+					// tmp.cast = ft_strsub(format, start, i - start);
+				}
+				// printf("hello\n");
+				// printf("check %d\n", format[i]);
+				if (is_type(format[i]))
+				{
+					tmp.type = format[i];
+					// printf("YES!\n");
+					sum += print(argptr, tmp);
+					break ;
+				}
 
-
-			}
+				if (!is_flag(format[i]) && !ft_isdigit(format[i]) &&
+					!is_cast(format[i]) && !is_type(format[i]) && format[i] != '.')
+					{
+						if (format[i] == '\0')
+							return (sum);
+						sum += print_c(format[i], tmp);
+						break ;
+					}
+				}
 			// show_tmp(tmp);
 
 		}
