@@ -176,7 +176,7 @@ int	ft_printf(const char *format, ...)
 						tmp.cast = "l";
 					else if (format[i] == 'h' && format[i + 1] == 'h')
 						tmp.cast = "hh";
-					else if (format[i] == 'h')
+					else if (format[i] == 'h' && !ft_strequ(tmp.cast, "z") && !ft_strequ(tmp.cast, "j"))
 						tmp.cast = "h";
 					i += ft_strlen(tmp.cast);
 					// while (is_cast(format[i]))

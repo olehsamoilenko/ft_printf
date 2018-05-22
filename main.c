@@ -55,14 +55,14 @@ int	main(void)
 
 	// res =    printf("%"); printf(" res: %d\n", res);
 
-	res =    printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
-	res = ft_printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
+	res =    printf("%0#.3-10x\n", 300); //printf(" res: %d\n", res);
+	res = ft_printf("%0#.3-10x\n", 300); //printf(" res: %d\n", res);
 
-	res =    printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
-	res = ft_printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
+	// res =    printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
+	// res = ft_printf("%zd\n", 4294967296); //printf(" res: %d\n", res);
 
-	res =    printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
-	res = ft_printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
+	// res =    printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
+	// res = ft_printf("%hd\n", 4294967296); //printf(" res: %d\n", res);
 	
 	// res =    printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
 	// res = ft_printf("%zhd\n", 4294967296); //printf(" res: %d\n", res);
