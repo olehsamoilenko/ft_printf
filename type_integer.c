@@ -14,38 +14,40 @@
 
 int	type_integer(va_list argptr, t_pattern tmp)
 {
-	intmax_t nbr;
-	char *str;
-	t_spaces spaces;
+	intmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
+	char		*buf;
 
-	if (ft_strequ(tmp.cast, "l") == 1 || tmp.type == 'D')
+	if (tmp.cast == L || tmp.type == 'D')
 		nbr = va_arg(argptr, long);
-	else if (ft_strequ(tmp.cast, 0) == 1)
+	else if (tmp.cast == NONE)
 		nbr = va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "h") == 1)
+	else if (tmp.cast == H)
 		nbr = (short)va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "hh") == 1)
+	else if (tmp.cast == HH)
 		nbr = (char)va_arg(argptr, int);
-	else if (ft_strequ(tmp.cast, "ll") == 1)
+	else if (tmp.cast == LL)
 		nbr = va_arg(argptr, long long);
-	else if (ft_strequ(tmp.cast, "j") == 1)
+	else if (tmp.cast == J)
 		nbr = va_arg(argptr, intmax_t);
-	else if (ft_strequ(tmp.cast, "z") == 1)
+	else if (tmp.cast == Z)
 		nbr = va_arg(argptr, size_t);
 
 
 	spaces = new_spaces();
-	str = ft_itoa(nbr);
-	// printf("CHECK: %s\n", str);
 	if (nbr == 0 && tmp.precision == -1)
 		str = ft_strdup("");
-	// if (tmp.precision == -1)
-	// 	tmp.precision = 0;
+	else
+		str = ft_itoa(nbr);
+
 	if (nbr < 0)
 	{
-		// spaces.minus = 1;
 		spaces.prefix = "-";
+		buf = str;
 		str = ft_strsub(str, 1, ft_strlen(str) - 1);
+		ft_strdel(&buf);
 	}
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
@@ -79,15 +81,14 @@ int	type_integer(va_list argptr, t_pattern tmp)
 	// ft_printf("spaces.end: %d\n", spaces.end);
 	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
 	// printf("CHECK: %s\n", str);
-	while (spaces.zeroes-- > 0)
-		str = ft_strjoin("0", str);
-	
-	str = ft_strjoin(spaces.prefix, str);
+	res = 0;
 	while (spaces.start-- > 0)
-		str = ft_strjoin(" ", str);
+		res += ft_putchar(' ');
+	res += ft_putstr(spaces.prefix);
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	res += ft_putstr(str);
 	while (spaces.end-- > 0)
-		str = ft_strjoin(str, " ");
-	// printf("CHECK: %s\n", str);
-	ft_putstr(str);
-	return(ft_strlen(str));
+		res += ft_putchar(' ');
+	return(res);
 }

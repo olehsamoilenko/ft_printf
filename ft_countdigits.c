@@ -31,18 +31,3 @@ int		ft_countdigits(intmax_t n)
 	}
 	return (count);
 }
-
-int		ft_countdigits_uint(uintmax_t n)
-{
-	int count;
-
-	if (n == 0)
-		return (1);
-	count = 0;
-	while (n > 0)
-	{
-		count++;
-		n /= 10;
-	}
-	return (count);
-}

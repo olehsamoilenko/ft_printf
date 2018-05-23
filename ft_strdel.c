@@ -1,34 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: osamoile <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/22 15:36:43 by osamoile          #+#    #+#             */
-/*   Updated: 2018/03/22 15:36:51 by osamoile         ###   ########.fr       */
+/*   Created: 2018/03/27 14:30:02 by osamoile          #+#    #+#             */
+/*   Updated: 2018/03/27 14:30:04 by osamoile         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
 
-char		*ft_strdup(const char *s1)
+void	ft_strdel(char **as)
 {
-	int		i;
-	char	*a;
-
-	i = 0;
-	while (s1[i])
-		i++;
-	a = ft_strnew(i);
-	if (a == 0)
-		return (0);
-	i = 0;
-	while (s1[i])
-	{
-		a[i] = s1[i];
-		i++;
-	}
-	a[i] = '\0';
-	return (a);
+	if (!as || !*as)
+		return ;
+	free(*as);
+	*as = 0;
 }

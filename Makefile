@@ -5,7 +5,6 @@ HEADER = printf.h
 FLAGS = -Wall -Werror -Wextra
 
 SRC =	ft_printf.c \
-		itoa_base.c \
 		type_o.c \
 		type_hex.c \
 		type_integer.c \
@@ -16,14 +15,15 @@ SRC =	ft_printf.c \
 		ft_isdigit.c \
 		ft_itoa.c \
 		ft_countdigits.c \
-		ft_strjoin.c \
 		ft_strlen.c \
 		ft_strsub.c \
+		itoa_base.c \
 		ft_strdup.c \
 		ft_strnew.c \
 		ft_putchar.c \
 		ft_putstr.c \
-		ft_strequ.c
+		ft_strequ.c \
+		ft_strdel.c
 
 all: $(NAME)
 

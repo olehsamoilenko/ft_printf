@@ -48,7 +48,7 @@ char		*itoa_base(uintmax_t num, int base, int letters) /* 0 - lower, 1 - upper *
 		return (ft_strdup("0"));
 	len = count(num, base);
 	// printf("LEN: %d\n", len);
-	res = (char*)malloc(sizeof(char) * (len + 1));
+	res = ft_strnew(len);
 	if (!res)
 		return (0);
 	res[len] = '\0';

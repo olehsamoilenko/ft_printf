@@ -12,46 +12,37 @@
 
 #include "printf.h"
 
+intmax_t	cast(va_list argptr, t_pattern tmp)
+{
+	intmax_t	nbr;
+
+	if (tmp.cast != NONE || tmp.type == 'p')
+		nbr = va_arg(argptr, size_t);
+	else
+		nbr = (unsigned int)va_arg(argptr, unsigned long);
+	if (tmp.cast == H)
+		nbr = (unsigned short)nbr;
+	if (tmp.cast == HH)
+		nbr = (unsigned char)nbr;
+	return (nbr);
+}
+
 int	type_hex(va_list argptr, t_pattern tmp)
 {
-	intmax_t nbr;
-	char *str;
-	t_spaces spaces;
+	intmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
 
-	if (ft_strequ(tmp.cast, "l") == 1 || tmp.type == 'p')
-		nbr = va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, 0) == 1)
-		nbr = (unsigned int)va_arg(argptr, unsigned long);
-	else if (ft_strequ(tmp.cast, "h") == 1)
-		nbr = (unsigned short)va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "hh") == 1)
-		nbr = (unsigned char)va_arg(argptr, size_t);
-	
-	else if (ft_strequ(tmp.cast, "ll") == 1)
-		nbr = va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "j") == 1)
-		nbr = va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "z") == 1)
-		nbr = va_arg(argptr, size_t);
-	// else if (ft_strcmp(tmp.cast, "hh") == 1)
-	// 	nbr = (char)va_arg(argptr, int);
-	// else if (ft_strcmp(tmp.cast, "h") == 1)
-	// 	nbr = (short)va_arg(argptr, int);
-	// else if (ft_strcmp(tmp.cast, "l") == 1)
-	// 	nbr = va_arg(argptr, long);
-	// else if (ft_strcmp(tmp.cast, "ll") == 1)
-	// 	nbr = va_arg(argptr, long long);
-	// else if (ft_strcmp(tmp.cast, "j") == 1)
-	// 	nbr = va_arg(argptr, intmax_t);
-	// else if (ft_strcmp(tmp.cast, "z") == 1)
-	// 	nbr = va_arg(argptr, size_t);
+	nbr = cast(argptr, tmp);
 
-	if (tmp.type == 'x' || tmp.type == 'p')
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
+	else if (tmp.type == 'x' || tmp.type == 'p')
 		str = itoa_base(nbr, 16, 0);
 	else if (tmp.type == 'X')
 		str = itoa_base(nbr, 16, 1);
-	if (nbr == 0 && tmp.precision == -1)
-		str = ft_strdup("");
+	
 	spaces = new_spaces();
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
@@ -78,13 +69,14 @@ int	type_hex(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	}
 
-	while (spaces.zeroes-- > 0)
-		str = ft_strjoin("0", str);
-	str = ft_strjoin(spaces.prefix, str);
+	res = 0;
 	while (spaces.start-- > 0)
-		str = ft_strjoin(" ", str);
+		res += ft_putchar(' ');
+	res += ft_putstr(spaces.prefix);
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	res += ft_putstr(str);
 	while (spaces.end-- > 0)
-		str = ft_strjoin(str, " ");
-	ft_putstr(str);
-	return(ft_strlen(str));
+		res += ft_putchar(' ');
+	return(res);
 }

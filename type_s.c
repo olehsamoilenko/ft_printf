@@ -29,6 +29,7 @@ int	get_size(int c)
 
 int	type_s(va_list argptr, t_pattern tmp)
 {
+	int			*buf;
 	int			*str;
 	t_spaces	spaces;
 	int			i;
@@ -40,15 +41,21 @@ int	type_s(va_list argptr, t_pattern tmp)
 	str = va_arg(argptr, int*);
 	if (str == 0)
 	{
+		// buf = str;
 		str = (int*)ft_strdup("(null)");
+		// ft_strdel(&buf);
 		tmp.type = 's';
 	}
 	spaces = new_spaces();
 
 	if (tmp.precision == -1)
+	{
+		// buf = str;
 		str = (int*)ft_strdup("");
+		// ft_strdel(&buf);
+	}
 
-	if (tmp.type == 'S' || ft_strequ(tmp.cast, "l") == 1)
+	if (tmp.type == 'S' || tmp.cast == L)
 	{
 		len = 0;
 		i = -1;
@@ -74,22 +81,19 @@ int	type_s(va_list argptr, t_pattern tmp)
 	else
 	{
 		if (tmp.precision > 0)
+		{
+			// buf = str;
+
 			str = (int*)ft_strsub((char*)str, 0, tmp.precision);
+
+			// ft_strdel(&buf);
+
+
+			
+		}
 		len = ft_strlen((char*)str);
 
-		// num = tmp.precision > len ? tmp.precision : len ;
 	}
-
-	// printf("len %d\n", len);
-	// printf("num %d\n", num);
-
-	// i = -1;
-	// while (str[++i])
-	// 	printf("%i\n", str[i]);
-
-	
-
-	
 
 
 	spaces.start = tmp.width - spaces.zeroes - len;
@@ -111,7 +115,7 @@ int	type_s(va_list argptr, t_pattern tmp)
 		res += ft_putchar(' ');
 	while (spaces.zeroes-- > 0)
 		res += ft_putchar('0');
-	if (tmp.type == 'S' || ft_strequ(tmp.cast, "l") == 1)
+	if (tmp.type == 'S' || tmp.cast == L)
 	{
 		i = -1;
 		while (str[++i] && num-- > 0)

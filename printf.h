@@ -12,6 +12,13 @@
 
 #ifndef PRINTF_H
 # define PRINTF_H
+# define NONE 0
+# define HH 1
+# define H 2
+# define Z 3
+# define L 4
+# define LL 5
+# define J 6
 // # define RED "\033[1;31m"
 // # define OFF "\033[0m"
 # include <stdarg.h>
@@ -28,7 +35,7 @@ typedef struct 	s_pattern
 	int zero;
 	int width;
 	int precision;
-	char *cast;
+	int cast;
 	char type;
 }				t_pattern;
 
@@ -49,15 +56,16 @@ char	*ft_itoa(intmax_t number);
 int		ft_countdigits(intmax_t n);
 int		ft_isdigit(int c);
 int		ft_putchar(int c);
-void	ft_putstr(char const *s);
+int		ft_putstr(char const *s);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
 int		ft_strequ(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 char	*ft_strnew(size_t size);
+void	ft_strdel(char **as);
 size_t	ft_strlen(const char *s); //what about size_t?
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_itoa_uint(uintmax_t number);
-int		ft_countdigits_uint(uintmax_t n);
+// char	*ft_strjoin(char const *s1, char const *s2);
+// char	*ft_itoa_uint(uintmax_t number);
+// int		ft_countdigits_uint(uintmax_t n);
 
 int	type_o(va_list argptr, t_pattern tmp);
 int	type_hex(va_list argptr, t_pattern tmp);

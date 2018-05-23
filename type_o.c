@@ -12,47 +12,36 @@
 
 #include "printf.h"
 
-t_spaces	new_spaces(void)
-{
-	t_spaces tmp;
-
-	tmp.start = 0;
-	tmp.end = 0;
-	tmp.zeroes = 0;
-	tmp.prefix = 0;
-	return (tmp);
-}
-
 int	type_o(va_list argptr, t_pattern tmp)
 {
-	uintmax_t nbr;
-	char *str;
-	t_spaces spaces;
+	uintmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
 
-	if (tmp.type == 'O')
+	if (tmp.cast == L || tmp.type == 'O')
 		nbr = va_arg(argptr, unsigned long);
-	else if (ft_strequ(tmp.cast, "h") == 1)
+	else if (tmp.cast == H)
 		nbr = (unsigned short)va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "hh") == 1)
+	else if (tmp.cast == HH)
 		nbr = (unsigned char)va_arg(argptr, size_t);
-	else if (ft_strequ(tmp.cast, "l") == 1)
-		nbr = va_arg(argptr, unsigned long);
-	else if (ft_strequ(tmp.cast, "ll") == 1)
+	else if (tmp.cast == LL)
 		nbr = va_arg(argptr, long long);
-	else if (ft_strequ(tmp.cast, "j") == 1)
+	else if (tmp.cast == J)
 		nbr = va_arg(argptr, intmax_t);
-	else if (ft_strequ(tmp.cast, "z") == 1)
+	else if (tmp.cast == Z)
 		nbr = va_arg(argptr, size_t);
 	else
 		nbr = va_arg(argptr, unsigned int);
 	
-
-	str = itoa_base(nbr, 8, 0);
 	if (nbr == 0 && tmp.precision == -1)
 		str = ft_strdup("");
+	else
+		str = itoa_base(nbr, 8, 0);
+	
 	spaces = new_spaces();
 
-	// show_tmp(tmp);
+
 	
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
@@ -62,7 +51,6 @@ int	type_o(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	if (tmp.hash == 1 && str[0] != '0' && spaces.zeroes == 0)
 	{
-		// spaces.octal += 1;
 		spaces.prefix = "0";
 		spaces.start -= ft_strlen(spaces.prefix);
 	}
@@ -77,26 +65,15 @@ int	type_o(va_list argptr, t_pattern tmp)
 		spaces.start = 0;
 	}
 	
-	// show_tmp(tmp);
-	// ft_printf("spaces.start: %d\n", spaces.start);
-	// ft_printf("spaces.end: %d\n", spaces.end);
-	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
-
-	while (spaces.zeroes-- > 0)
-		str = ft_strjoin("0", str);
-	str = ft_strjoin(spaces.prefix, str);
+	res = 0;
 	while (spaces.start-- > 0)
-		str = ft_strjoin(" ", str);
+		res += ft_putchar(' ');
+	res += ft_putstr(spaces.prefix);
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	res += ft_putstr(str);
 	while (spaces.end-- > 0)
-		str = ft_strjoin(str, " ");
-	ft_putstr(str);
-	return(ft_strlen(str));
-	// while (spaces.start-- > 0)
-	// 	ft_putchar(' ');
-	// ft_putstr(spaces.prefix);
-	// while (spaces.zeroes-- > 0)
-	// 	ft_putchar('0');
-	// ft_putstr(str);
-	// while (spaces.end-- > 0)
-	// 	ft_putchar(' ');
+		res += ft_putchar(' ');
+	return(res);
+
 }

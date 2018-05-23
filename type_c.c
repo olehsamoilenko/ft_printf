@@ -12,18 +12,12 @@
 
 #include "printf.h"
 
-
 int	print_c(int c, t_pattern tmp)
 {
 	char		*str;
 	t_spaces	spaces;
 	int			res;
 	int			len;
-	int i;
-
-
-
-	
 
 	str = ft_strnew(1);
 	str[0] = c;
@@ -43,28 +37,23 @@ int	print_c(int c, t_pattern tmp)
 		spaces.zeroes = spaces.start;
 		spaces.start = 0;
 	}
-
-
 	res = spaces.start + spaces.zeroes + spaces.end;
 	while (spaces.start-- > 0)
 		ft_putchar(' ');
 	while (spaces.zeroes-- > 0)
 		ft_putchar('0');
-		// str = ft_strjoin(" ", str);
-	if (tmp.type == 'C' || ft_strequ(tmp.cast, "l") == 1)
+	if (tmp.type == 'C' || tmp.cast == L)
 		res += ft_putchar(c);
 	else
 		res += ft_putchar((char)c);
 	while (spaces.end-- > 0)
 		ft_putchar(' ');
-		// str = ft_strjoin(str, " ");
 	return (res);
 }
 
 int	type_c(va_list argptr, t_pattern tmp)
 {
-	int c;
+	int		c;
 	c = va_arg(argptr, int);
 	return (print_c(c, tmp));
-
 }

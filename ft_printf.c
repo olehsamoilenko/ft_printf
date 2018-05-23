@@ -21,8 +21,19 @@ void	show_tmp(t_pattern tmp)
 	printf("space: %d\n", tmp.space);
 	printf("width: %d\n", tmp.width);
 	printf("precision: %d\n", tmp.precision);
-	printf("cast: %s\n", tmp.cast);
+	printf("cast: %d\n", tmp.cast);
 	printf("type: %d %c\n", tmp.type, tmp.type);
+}
+
+t_spaces	new_spaces(void)
+{
+	t_spaces tmp;
+
+	tmp.start = 0;
+	tmp.end = 0;
+	tmp.zeroes = 0;
+	tmp.prefix = 0;
+	return (tmp);
 }
 
 t_pattern new_value(void)
@@ -123,9 +134,10 @@ int	ft_printf(const char *format, ...)
 	va_list		argptr;
 	int			i;
 	t_pattern	tmp;
-	int 		start;
-	int sum;
-	int buf;
+	char		*num;
+	// int 		start;
+	int			sum;
+	int			buf;
 
 	va_start(argptr, format); /* the last defined variable as parameter */
 	i = -1;
@@ -145,18 +157,22 @@ int	ft_printf(const char *format, ...)
 				}
 				if (format[i] >= '1' && format[i] <= '9')
 				{
-					start = i;
+					buf = i;
 					while (ft_isdigit(format[i]))
 						i++;
-					tmp.width = ft_atoi(ft_strsub(format, start, i - start));
+					num = ft_strsub(format, buf, i - buf);
+					tmp.width = ft_atoi(num);
+					ft_strdel(&num);
 				}
 				if (format[i] == '.')
 				{
 					i++;
-					start = i;
+					buf = i;
 					while (ft_isdigit(format[i]))
 						i++;
-					buf = ft_atoi(ft_strsub(format, start, i - start));
+					num = ft_strsub(format, buf, i - buf);
+					buf = ft_atoi(num);
+					ft_strdel(&num);
 					if (buf != 0) /* ("%.d",0) = " " */
 						tmp.precision = buf;
 					else
@@ -166,19 +182,21 @@ int	ft_printf(const char *format, ...)
 				if (is_cast(format[i]))
 				{
 					// start = i;
-					if (format[i] == 'z')
-						tmp.cast = "z";
-					else if (format[i] == 'j')
-						tmp.cast = "j";
-					else if (format[i] == 'l' && format[i + 1] == 'l')
-						tmp.cast = "ll";
-					else if (format[i] == 'l')
-						tmp.cast = "l";
-					else if (format[i] == 'h' && format[i + 1] == 'h')
-						tmp.cast = "hh";
-					else if (format[i] == 'h' && !ft_strequ(tmp.cast, "z") && !ft_strequ(tmp.cast, "j"))
-						tmp.cast = "h";
-					i += ft_strlen(tmp.cast);
+					if (format[i] == 'z' && Z > tmp.cast)
+						tmp.cast = Z;
+					else if (format[i] == 'j' && J > tmp.cast)
+						tmp.cast = J;
+					else if (format[i] == 'l' && format[i + 1] == 'l' && LL > tmp.cast)
+						tmp.cast = LL;
+					else if (format[i] == 'l' && L > tmp.cast)
+						tmp.cast = L;
+					else if (format[i] == 'h' && format[i + 1] == 'h' && HH > tmp.cast)
+						tmp.cast = HH;
+					else if (format[i] == 'h' && H > tmp.cast)
+						tmp.cast = H;
+					i++;
+					if (tmp.cast == HH || tmp.cast == LL)
+						i++;
 					// while (is_cast(format[i]))
 					// 	i++;
 					// tmp.cast = ft_strsub(format, start, i - start);
