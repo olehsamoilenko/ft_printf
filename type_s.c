@@ -17,7 +17,7 @@
 
 int	get_size(int c)
 {
-	if (c <= _7bits)
+	if (c <= _7bits || MB_CUR_MAX != 4)
 		return (1);
 	else if (c <= _11bits)
 		return (2);
@@ -29,7 +29,7 @@ int	get_size(int c)
 
 int	type_s(va_list argptr, t_pattern tmp)
 {
-	int			*buf;
+	char		*buf;
 	int			*str;
 	t_spaces	spaces;
 	int			i;
@@ -42,7 +42,7 @@ int	type_s(va_list argptr, t_pattern tmp)
 	if (str == 0)
 	{
 		// buf = str;
-		str = (int*)ft_strdup("(null)");
+		str = (int*)"(null)";
 		// ft_strdel(&buf);
 		tmp.type = 's';
 	}
@@ -54,6 +54,7 @@ int	type_s(va_list argptr, t_pattern tmp)
 		str = (int*)ft_strdup("");
 		// ft_strdel(&buf);
 	}
+
 
 	if (tmp.type == 'S' || tmp.cast == L)
 	{
@@ -82,11 +83,11 @@ int	type_s(va_list argptr, t_pattern tmp)
 	{
 		if (tmp.precision > 0)
 		{
-			// buf = str;
 
-			str = (int*)ft_strsub((char*)str, 0, tmp.precision);
+			buf = ft_strsub((char*)str, 0, tmp.precision);
+			str = (int*)buf;
+			ft_strdel(&buf);
 
-			// ft_strdel(&buf);
 
 
 			
@@ -115,21 +116,28 @@ int	type_s(va_list argptr, t_pattern tmp)
 		res += ft_putchar(' ');
 	while (spaces.zeroes-- > 0)
 		res += ft_putchar('0');
-	if (tmp.type == 'S' || tmp.cast == L)
+	// printf("TEST: %s\n", str);
+	if ((tmp.type == 'S' || tmp.cast == L) && ft_strequ(str, "(null)") == 0)
 	{
 		i = -1;
-		while (str[++i] && num-- > 0)
+		// printf("%d\n", spaces.len);
+		while (str[++i] && num-- > 0/* && spaces.len-- > 0*/)
 		{
 			res += ft_putchar(str[i]);
 		}
 	}
 	else
 	{
-		write(1, ((char*)str), ft_strlen((char*)(str)));
-		res += ft_strlen((char*)(str));
+
+		res += ft_putstr((char*)str);
+
 	}
+	// ft_strdel(&str);
+	// buf = str;
+	// ft_strdel(&buf);
+
 	while (spaces.end-- > 0)
 		res += ft_putchar(' ');
 	return (res);
-	// return(ft_strlen((char*)(str)));
+
 }

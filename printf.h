@@ -19,6 +19,12 @@
 # define L 4
 # define LL 5
 # define J 6
+// # define MINUS "-"
+// # define PLUS "+"
+// # define SPACE " "
+// # define ZERO "0"
+// # define hEX "0x"
+// # define HEX "0X"
 // # define RED "\033[1;31m"
 // # define OFF "\033[0m"
 # include <stdarg.h>
@@ -44,6 +50,7 @@ typedef struct	s_spaces
 	int start;
 	int end;
 	int zeroes;
+
 
 	char *prefix; // o - 0, x - 0x, X - 0X, i - { -, +, ' ' }
 
@@ -77,6 +84,7 @@ int	type_c(va_list argptr, t_pattern tmp);
 int	type_unsigned(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
+int			get_size(int c); //type_s
 
 void	tests_o(void);
 void	tests_hex(void);

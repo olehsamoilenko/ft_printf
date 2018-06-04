@@ -32,6 +32,7 @@ t_spaces	new_spaces(void)
 	tmp.start = 0;
 	tmp.end = 0;
 	tmp.zeroes = 0;
+
 	tmp.prefix = 0;
 	return (tmp);
 }

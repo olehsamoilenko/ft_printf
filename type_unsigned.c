@@ -67,6 +67,7 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 	while (spaces.zeroes-- > 0)
 		res += ft_putchar('0');
 	res += ft_putstr(str);
+	ft_strdel(&str);
 	while (spaces.end-- > 0)
 		res += ft_putchar(' ');
 	return(res);

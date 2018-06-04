@@ -50,7 +50,7 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
 	if (spaces.start < 0)
 		spaces.start = 0;
-	if ((tmp.hash == 1 && nbr > 0) || tmp.type == 'p')
+	if ((tmp.hash == 1 && nbr != 0) || tmp.type == 'p')
 	{
 		if (tmp.type == 'x' || tmp.type == 'p')
 			spaces.prefix = "0x";
@@ -76,6 +76,7 @@ int	type_hex(va_list argptr, t_pattern tmp)
 	while (spaces.zeroes-- > 0)
 		res += ft_putchar('0');
 	res += ft_putstr(str);
+	ft_strdel(&str);
 	while (spaces.end-- > 0)
 		res += ft_putchar(' ');
 	return(res);

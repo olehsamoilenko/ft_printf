@@ -19,12 +19,15 @@ int	print_c(int c, t_pattern tmp)
 	int			res;
 	int			len;
 
-	str = ft_strnew(1);
-	str[0] = c;
+	// str = ft_strnew(1);
+	// str[0] = c;
 	spaces = new_spaces();
-	spaces.start = tmp.width - ft_strlen(str);
-	if (c == 0)
-		spaces.start--;
+	if (tmp.cast == L || tmp.type == 'C')
+		spaces.start = tmp.width - get_size(c);
+	else
+		spaces.start = tmp.width - 1;
+	// if (c == 0)
+	// 	spaces.start--;
 	if (spaces.start < 0)
 		spaces.start = 0;
 	if (tmp.minus == 1)

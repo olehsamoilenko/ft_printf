@@ -69,9 +69,12 @@ int	type_o(va_list argptr, t_pattern tmp)
 	while (spaces.start-- > 0)
 		res += ft_putchar(' ');
 	res += ft_putstr(spaces.prefix);
+	// if (ft_strequ(spaces.prefix, "") != 0)
+	// 	ft_strdel(&spaces.prefix);
 	while (spaces.zeroes-- > 0)
 		res += ft_putchar('0');
 	res += ft_putstr(str);
+	ft_strdel(&str);
 	while (spaces.end-- > 0)
 		res += ft_putchar(' ');
 	return(res);

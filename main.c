@@ -15,15 +15,17 @@
 
 int	main(void)
 {
-	// char* l = setlocale(LC_ALL, "");
+	char* l = setlocale(LC_ALL, "en_US.UTF-8");
 
 	int res;
 
-	res =    printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
-	res = ft_printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
+	// res =    printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
+	// res = ft_printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
 
-	// res =    printf("%10s is a string", "this"); printf(" res: %d\n", res);
-	// res = ft_printf("%10s is a string", "this"); printf(" res: %d\n", res);
+	res =    printf("|%ls|", NULL); printf(" res: %d\n", res);
+	res = ft_printf("|%ls|", NULL); printf(" res: %d\n", res);
+
+
 
 	// res =    printf("{%05.s}", "42 c est cool"); printf(" res: %d\n", res);
 	// res = ft_printf("{%05.s}", "42 c est cool"); printf(" res: %d\n", res);
