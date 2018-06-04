@@ -12,12 +12,26 @@
 
 #include "printf.h"
 
-int	type_unsigned(va_list argptr, t_pattern tmp)
+static int		print_u(t_spaces spaces, char *str)
+{
+	int		res;
+
+	res = 0;
+	while (spaces.start-- > 0)
+		res += ft_putchar(' ');
+	res += ft_putstr(spaces.prefix);
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	res += ft_putstr(str);
+	ft_strdel(&str);
+	while (spaces.end-- > 0)
+		res += ft_putchar(' ');
+	return (res);
+}
+
+static intmax_t	cast_u(va_list argptr, t_pattern tmp)
 {
 	intmax_t	nbr;
-	char		*str;
-	t_spaces	spaces;
-	int			res;
 
 	if (tmp.cast == L || tmp.type == 'U')
 		nbr = va_arg(argptr, unsigned long);
@@ -33,22 +47,21 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 		nbr = va_arg(argptr, uintmax_t);
 	else if (tmp.cast == Z)
 		nbr = va_arg(argptr, size_t);
+	return (nbr);
+}
 
+static t_spaces	flags_handler(t_pattern tmp, char *str)
+{
+	t_spaces	spaces;
 
 	spaces = new_spaces();
-	if (nbr == 0 && tmp.precision == -1)
-		str = ft_strdup("");
-	else
-		str = itoa_base(nbr, 10, 1);
-
-	
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
 		spaces.zeroes = 0;
-	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str) - ft_strlen(spaces.prefix);
+	spaces.start = tmp.width - spaces.zeroes
+			- ft_strlen(str) - ft_strlen(spaces.prefix);
 	if (spaces.start < 0)
 		spaces.start = 0;
-
 	if (tmp.minus == 1)
 	{
 		spaces.end = spaces.start;
@@ -59,16 +72,21 @@ int	type_unsigned(va_list argptr, t_pattern tmp)
 		spaces.zeroes += spaces.start;
 		spaces.start = 0;
 	}
-	
-	res = 0;
-	while (spaces.start-- > 0)
-		res += ft_putchar(' ');
-	res += ft_putstr(spaces.prefix);
-	while (spaces.zeroes-- > 0)
-		res += ft_putchar('0');
-	res += ft_putstr(str);
-	ft_strdel(&str);
-	while (spaces.end-- > 0)
-		res += ft_putchar(' ');
-	return(res);
+	return (spaces);
+}
+
+int				type_unsigned(va_list argptr, t_pattern tmp)
+{
+	intmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
+
+	nbr = cast_u(argptr, tmp);
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
+	else
+		str = itoa_base(nbr, 10, 1);
+	spaces = flags_handler(tmp, str);
+	return (print_u(spaces, str));
 }

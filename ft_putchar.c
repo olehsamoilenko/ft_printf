@@ -25,22 +25,29 @@
 #define _11100000 224
 #define _11110000 240
 
+int		get_size(int c)
+{
+	if (c <= _7bits || MB_CUR_MAX != 4)
+		return (1);
+	else if (c <= _11bits)
+		return (2);
+	else if (c <= _16bits)
+		return (3);
+	else
+		return (4);
+}
 
-int	ft_putchar(int c)
+int		ft_putchar(int c)
 {
 	unsigned char	code[4];
 
 	if (c <= _7bits || MB_CUR_MAX != 4)
-	{
 		write(1, &c, 1);
-		return (1);
-	}
 	else if (c <= _11bits)
 	{
 		code[0] = (c >> 6 & _00011111) | _11000000;
 		code[1] = (c & _00111111) | _10000000;
 		write(1, &code, 2);
-		return (2);
 	}
 	else if (c <= _16bits)
 	{
@@ -48,7 +55,6 @@ int	ft_putchar(int c)
 		code[1] = (c >> 6 & _00111111) | _10000000;
 		code[2] = (c & _00111111) | _10000000;
 		write(1, &code, 3);
-		return (3);
 	}
 	else
 	{
@@ -57,6 +63,6 @@ int	ft_putchar(int c)
 		code[2] = (c >> 6 & _00111111) | _10000000;
 		code[3] = (c & _00111111) | _10000000;
 		write(1, &code, 4);
-		return (4);
 	}
+	return (get_size(c));
 }

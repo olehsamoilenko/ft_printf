@@ -12,22 +12,15 @@
 
 #include "printf.h"
 
-int	print_c(int c, t_pattern tmp)
+static t_spaces		flags_handler(t_pattern tmp, int c)
 {
-	char		*str;
 	t_spaces	spaces;
-	int			res;
-	int			len;
 
-	// str = ft_strnew(1);
-	// str[0] = c;
 	spaces = new_spaces();
 	if (tmp.cast == L || tmp.type == 'C')
 		spaces.start = tmp.width - get_size(c);
 	else
 		spaces.start = tmp.width - 1;
-	// if (c == 0)
-	// 	spaces.start--;
 	if (spaces.start < 0)
 		spaces.start = 0;
 	if (tmp.minus == 1)
@@ -40,23 +33,35 @@ int	print_c(int c, t_pattern tmp)
 		spaces.zeroes = spaces.start;
 		spaces.start = 0;
 	}
-	res = spaces.start + spaces.zeroes + spaces.end;
+	return (spaces);
+}
+
+int					print_c(int c, t_pattern tmp)
+{
+	char		*str;
+	t_spaces	spaces;
+	int			res;
+	int			len;
+
+	res = 0;
+	spaces = flags_handler(tmp, c);
 	while (spaces.start-- > 0)
-		ft_putchar(' ');
+		res += ft_putchar(' ');
 	while (spaces.zeroes-- > 0)
-		ft_putchar('0');
+		res += ft_putchar('0');
 	if (tmp.type == 'C' || tmp.cast == L)
 		res += ft_putchar(c);
 	else
 		res += ft_putchar((char)c);
 	while (spaces.end-- > 0)
-		ft_putchar(' ');
+		res += ft_putchar(' ');
 	return (res);
 }
 
-int	type_c(va_list argptr, t_pattern tmp)
+int					type_c(va_list argptr, t_pattern tmp)
 {
-	int		c;
+	int	c;
+
 	c = va_arg(argptr, int);
 	return (print_c(c, tmp));
 }

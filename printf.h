@@ -19,6 +19,9 @@
 # define L 4
 # define LL 5
 # define J 6
+#define _7bits 127
+#define _11bits 2047
+#define _16bits 65535
 // # define MINUS "-"
 // # define PLUS "+"
 // # define SPACE " "
@@ -50,9 +53,7 @@ typedef struct	s_spaces
 	int start;
 	int end;
 	int zeroes;
-
-
-	char *prefix; // o - 0, x - 0x, X - 0X, i - { -, +, ' ' }
+	char *prefix; /* o - 0, x - 0x, X - 0X, i - { -, +, ' ' } */
 
 }				t_spaces;
 
@@ -69,27 +70,17 @@ int		ft_strequ(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
 char	*ft_strnew(size_t size);
 void	ft_strdel(char **as);
-size_t	ft_strlen(const char *s); //what about size_t?
-// char	*ft_strjoin(char const *s1, char const *s2);
-// char	*ft_itoa_uint(uintmax_t number);
-// int		ft_countdigits_uint(uintmax_t n);
+size_t	ft_strlen(const char *s);
 
-int	type_o(va_list argptr, t_pattern tmp);
-int	type_hex(va_list argptr, t_pattern tmp);
-int	type_integer(va_list argptr, t_pattern tmp);
-int type_s(va_list argptr, t_pattern tmp);
-int	print_c(int c, t_pattern tmp);
-int	type_c(va_list argptr, t_pattern tmp);
-// int	type_persent(va_list argptr, t_pattern tmp);
-int	type_unsigned(va_list argptr, t_pattern tmp);
+
+int		type_o(va_list argptr, t_pattern tmp);
+int		type_hex(va_list argptr, t_pattern tmp);
+int		type_integer(va_list argptr, t_pattern tmp);
+int 	type_s(va_list argptr, t_pattern tmp);
+int		print_c(int c, t_pattern tmp);
+int		type_c(va_list argptr, t_pattern tmp);
+int		type_unsigned(va_list argptr, t_pattern tmp);
 
 t_spaces	new_spaces(void); //type_o
 int			get_size(int c); //type_s
-
-void	tests_o(void);
-void	tests_hex(void);
-void	tests_integer(void);
-void	tests_c(void);
-void	show_tmp(t_pattern tmp);
-
 #endif

@@ -12,7 +12,7 @@
 
 #include "printf.h"
 
-intmax_t	cast(va_list argptr, t_pattern tmp)
+static intmax_t	cast_hex(va_list argptr, t_pattern tmp)
 {
 	intmax_t	nbr;
 
@@ -27,22 +27,27 @@ intmax_t	cast(va_list argptr, t_pattern tmp)
 	return (nbr);
 }
 
-int	type_hex(va_list argptr, t_pattern tmp)
+static int		print_hex(t_spaces spaces, char *str)
 {
-	intmax_t	nbr;
-	char		*str;
+	int		res;
+
+	res = 0;
+	while (spaces.start-- > 0)
+		res += ft_putchar(' ');
+	res += ft_putstr(spaces.prefix);
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
+	res += ft_putstr(str);
+	ft_strdel(&str);
+	while (spaces.end-- > 0)
+		res += ft_putchar(' ');
+	return (res);
+}
+
+static t_spaces	flags_handler(t_pattern tmp, char *str, int nbr)
+{
 	t_spaces	spaces;
-	int			res;
 
-	nbr = cast(argptr, tmp);
-
-	if (nbr == 0 && tmp.precision == -1)
-		str = ft_strdup("");
-	else if (tmp.type == 'x' || tmp.type == 'p')
-		str = itoa_base(nbr, 16, 0);
-	else if (tmp.type == 'X')
-		str = itoa_base(nbr, 16, 1);
-	
 	spaces = new_spaces();
 	spaces.zeroes = tmp.precision - ft_strlen(str);
 	if (spaces.zeroes < 0)
@@ -68,16 +73,23 @@ int	type_hex(va_list argptr, t_pattern tmp)
 		spaces.zeroes += spaces.start;
 		spaces.start = 0;
 	}
+	return (spaces);
+}
 
-	res = 0;
-	while (spaces.start-- > 0)
-		res += ft_putchar(' ');
-	res += ft_putstr(spaces.prefix);
-	while (spaces.zeroes-- > 0)
-		res += ft_putchar('0');
-	res += ft_putstr(str);
-	ft_strdel(&str);
-	while (spaces.end-- > 0)
-		res += ft_putchar(' ');
-	return(res);
+int				type_hex(va_list argptr, t_pattern tmp)
+{
+	intmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	int			res;
+
+	nbr = cast_hex(argptr, tmp);
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
+	else if (tmp.type == 'x' || tmp.type == 'p')
+		str = itoa_base(nbr, 16, 0);
+	else if (tmp.type == 'X')
+		str = itoa_base(nbr, 16, 1);
+	spaces = flags_handler(tmp, str, nbr);
+	return (print_hex(spaces, str));
 }

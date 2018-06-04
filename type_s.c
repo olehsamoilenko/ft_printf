@@ -11,92 +11,62 @@
 /* ************************************************************************** */
 
 #include "printf.h"
-#define _7bits 127
-#define _11bits 2047
-#define _16bits 65535
 
-int	get_size(int c)
+static int		print_s(t_spaces spaces, t_pattern tmp, int num, int *str)
 {
-	if (c <= _7bits || MB_CUR_MAX != 4)
-		return (1);
-	else if (c <= _11bits)
-		return (2);
-	else if (c <= _16bits)
-		return (3);
-	else
-		return (4);
-}
+	int		res;
+	int		i;
 
-int	type_s(va_list argptr, t_pattern tmp)
-{
-	char		*buf;
-	int			*str;
-	t_spaces	spaces;
-	int			i;
-	int			res;
-	int 		len;
-	int			num;
-
-
-	str = va_arg(argptr, int*);
-	if (str == 0)
-	{
-		// buf = str;
-		str = (int*)"(null)";
-		// ft_strdel(&buf);
-		tmp.type = 's';
-	}
-	spaces = new_spaces();
-
-	if (tmp.precision == -1)
-	{
-		// buf = str;
-		str = (int*)ft_strdup("");
-		// ft_strdel(&buf);
-	}
-
-
+	res = 0;
+	while (spaces.start-- > 0)
+		res += ft_putchar(' ');
+	while (spaces.zeroes-- > 0)
+		res += ft_putchar('0');
 	if (tmp.type == 'S' || tmp.cast == L)
 	{
-		len = 0;
 		i = -1;
-		num = 0;
-		while (str[++i])
-		{
-			if (tmp.precision > 0)
-			{
-				if (len + get_size(str[i]) <= tmp.precision)
-				{
-					len += get_size(str[i]);
-					num += 1;
-				}
-			}
-			else
-			{
-				len += get_size(str[i]);
-				num += 1;
-			}
-		}
+		while (str[++i] && num-- > 0)
+			res += ft_putchar(str[i]);
+	}
+	else
+		res += ft_putstr((char*)str);
+	while (spaces.end-- > 0)
+		res += ft_putchar(' ');
+	return (res);
+}
 
+static int		*precision_handler(t_pattern tmp, int *num, int *len, int *str)
+{
+	int		i;
+
+	*len = 0;
+	*num = 0;
+	if (tmp.precision == -1)
+		str = (int*)ft_strdup("");
+	if ((tmp.type == 'S' || tmp.cast == L) && tmp.precision != -1)
+	{
+		i = -1;
+		while (str[++i])
+			if (*len + get_size(str[i]) <= tmp.precision || tmp.precision <= 0)
+			{
+				*len += get_size(str[i]);
+				*num += 1;
+			}
 	}
 	else
 	{
 		if (tmp.precision > 0)
-		{
-
-			buf = ft_strsub((char*)str, 0, tmp.precision);
-			str = (int*)buf;
-			ft_strdel(&buf);
-
-
-
-			
-		}
-		len = ft_strlen((char*)str);
-
+			str = (int*)ft_strsub((char*)str, 0, tmp.precision);
+		*len = ft_strlen((char*)str);
 	}
+	return (str);
+}
 
+static t_spaces	flags_handler(t_pattern tmp, int len)
+{
+	t_spaces	spaces;
 
+	spaces = new_spaces();
 	spaces.start = tmp.width - spaces.zeroes - len;
 	if (spaces.start < 0)
 		spaces.start = 0;
@@ -110,34 +80,30 @@ int	type_s(va_list argptr, t_pattern tmp)
 		spaces.zeroes = spaces.start;
 		spaces.start = 0;
 	}
+	return (spaces);
+}
 
-	res = 0;
-	while (spaces.start-- > 0)
-		res += ft_putchar(' ');
-	while (spaces.zeroes-- > 0)
-		res += ft_putchar('0');
-	// printf("TEST: %s\n", str);
-	if ((tmp.type == 'S' || tmp.cast == L) && ft_strequ(str, "(null)") == 0)
+static void		null_handler(t_pattern *tmp, int **str)
+{
+	if (*str == 0)
 	{
-		i = -1;
-		// printf("%d\n", spaces.len);
-		while (str[++i] && num-- > 0/* && spaces.len-- > 0*/)
-		{
-			res += ft_putchar(str[i]);
-		}
+		*str = (int*)"(null)";
+		tmp->type = 's';
+		tmp->cast = NONE;
 	}
-	else
-	{
+}
 
-		res += ft_putstr((char*)str);
+int				type_s(va_list argptr, t_pattern tmp)
+{
+	char		*buf;
+	int			*str;
+	t_spaces	spaces;
+	int			len;
+	int			num;
 
-	}
-	// ft_strdel(&str);
-	// buf = str;
-	// ft_strdel(&buf);
-
-	while (spaces.end-- > 0)
-		res += ft_putchar(' ');
-	return (res);
-
+	str = va_arg(argptr, int*);
+	null_handler(&tmp, &str);
+	str = precision_handler(tmp, &num, &len, str);
+	spaces = flags_handler(tmp, len);
+	return (print_s(spaces, tmp, num, str));
 }

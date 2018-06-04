@@ -12,19 +12,6 @@
 
 #include "printf.h"
 
-void	show_tmp(t_pattern tmp)
-{
-	printf("hash: %d\n", tmp.hash);
-	printf("minus: %d\n", tmp.minus);
-	printf("plus: %d\n", tmp.plus);
-	printf("zero: %d\n", tmp.zero);
-	printf("space: %d\n", tmp.space);
-	printf("width: %d\n", tmp.width);
-	printf("precision: %d\n", tmp.precision);
-	printf("cast: %d\n", tmp.cast);
-	printf("type: %d %c\n", tmp.type, tmp.type);
-}
-
 t_spaces	new_spaces(void)
 {
 	t_spaces tmp;
@@ -52,16 +39,6 @@ t_pattern new_value(void)
 	tmp.type = 0;
 	return (tmp);
 }
-
-// int	test(int a)
-// {
-// 	ft_putnbr(a);
-// }
-
-// void	type(int a, *f(int)) // problem !!!
-// {
-// 	// f(a);
-// }
 
 int is_type(char c)
 {
@@ -119,15 +96,22 @@ int	print(va_list argptr, t_pattern tmp)
 	else if (tmp.type == 'x' || tmp.type == 'X' || tmp.type == 'p')
 		return(type_hex(argptr, tmp));
 	else
-		return (100500);
+		return (0);
 }
 
-int max(int nbr1, int nbr2)
+int collect_width(const char *format, int *i)
 {
-	if (nbr1 >= nbr2)
-		return (nbr1);
-	else
-		return (nbr2);
+	int		buf;
+	char	*num;
+	int		res;
+
+	buf = *i;
+	while (ft_isdigit(format[*i]))
+		(*i)++;
+	num = ft_strsub(format, buf, *i - buf);
+	res = ft_atoi(num);
+	ft_strdel(&num);
+	return (res);
 }
 
 int	ft_printf(const char *format, ...)
@@ -136,7 +120,6 @@ int	ft_printf(const char *format, ...)
 	int			i;
 	t_pattern	tmp;
 	char		*num;
-	// int 		start;
 	int			sum;
 	int			buf;
 
@@ -145,7 +128,6 @@ int	ft_printf(const char *format, ...)
 	sum = 0;
 	while (format[++i])
 	{
-		// printf("check %d\n", i);
 		if (format[i] == '%') /* qualifier */
 		{
 			tmp = new_value();
@@ -153,18 +135,9 @@ int	ft_printf(const char *format, ...)
 			while (1)
 			{
 				if (is_flag(format[i]))
-				{
 					put_to_value(&tmp, format[i++]);
-				}
 				if (format[i] >= '1' && format[i] <= '9')
-				{
-					buf = i;
-					while (ft_isdigit(format[i]))
-						i++;
-					num = ft_strsub(format, buf, i - buf);
-					tmp.width = ft_atoi(num);
-					ft_strdel(&num);
-				}
+					tmp.width = collect_width(format, &i);
 				if (format[i] == '.')
 				{
 					i++;
@@ -178,11 +151,9 @@ int	ft_printf(const char *format, ...)
 						tmp.precision = buf;
 					else
 						tmp.precision = -1;
-					
 				}
 				if (is_cast(format[i]))
 				{
-					// start = i;
 					if (format[i] == 'z' && Z > tmp.cast)
 						tmp.cast = Z;
 					else if (format[i] == 'j' && J > tmp.cast)
@@ -198,20 +169,13 @@ int	ft_printf(const char *format, ...)
 					i++;
 					if (tmp.cast == HH || tmp.cast == LL)
 						i++;
-					// while (is_cast(format[i]))
-					// 	i++;
-					// tmp.cast = ft_strsub(format, start, i - start);
 				}
-				// printf("hello\n");
-				// printf("check %d\n", format[i]);
 				if (is_type(format[i]))
 				{
 					tmp.type = format[i];
-					// printf("YES!\n");
 					sum += print(argptr, tmp);
 					break ;
 				}
-
 				if (!is_flag(format[i]) && !ft_isdigit(format[i]) &&
 					!is_cast(format[i]) && !is_type(format[i]) && format[i] != '.')
 					{
@@ -221,15 +185,9 @@ int	ft_printf(const char *format, ...)
 						break ;
 					}
 				}
-			// show_tmp(tmp);
-
 		}
-
 		else
-		{
-			ft_putchar(format[i]);
-			sum += 1;
-		}
+			sum += ft_putchar(format[i]);
 	}
 	return (sum);
 }

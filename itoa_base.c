@@ -47,14 +47,12 @@ char		*itoa_base(uintmax_t num, int base, int letters) /* 0 - lower, 1 - upper *
 	if (num <= 0)
 		return (ft_strdup("0"));
 	len = count(num, base);
-	// printf("LEN: %d\n", len);
 	res = ft_strnew(len);
 	if (!res)
 		return (0);
 	res[len] = '\0';
 	while (num != 0)
 	{
-		// printf("%c\n", convert(num % base));
 		len--;
 		res[len] = convert(num % base, letters);
 		num /= base;

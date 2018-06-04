@@ -19,11 +19,15 @@ int	main(void)
 
 	int res;
 
-	// res =    printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
-	// res = ft_printf("%#llx", 9223372036854775807); printf(" res: %d\n", res);
+	// res =    printf("%y", 123); printf(" res: %d\n", res);
+	// res = ft_printf("%y", 123); printf(" res: %d\n", res);
 
-	res =    printf("|%ls|", NULL); printf(" res: %d\n", res);
-	res = ft_printf("|%ls|", NULL); printf(" res: %d\n", res);
+	// res =    printf("%S", L"我是一只猫。"); printf(" res: %d\n", res);
+	// res = ft_printf("%S", L"我是一只猫。"); printf(" res: %d\n", res);
+	
+	// res =    printf("|%0+20.S|", L"我是一只猫。"); printf(" res: %d\n", res);
+	// res = ft_printf("|%0+20.S|", L"我是一只猫。"); printf(" res: %d\n", res);
+
 
 
 
