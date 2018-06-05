@@ -12,18 +12,12 @@
 
 #include "printf.h"
 
-int	type_integer(va_list argptr, t_pattern tmp)
+static intmax_t	cast_int(t_pattern tmp, va_list argptr)
 {
 	intmax_t	nbr;
-	char		*str;
-	t_spaces	spaces;
-	int			res;
-	char		*buf;
 
 	if (tmp.cast == L || tmp.type == 'D')
 		nbr = va_arg(argptr, long);
-	else if (tmp.cast == NONE)
-		nbr = va_arg(argptr, int);
 	else if (tmp.cast == H)
 		nbr = (short)va_arg(argptr, int);
 	else if (tmp.cast == HH)
@@ -34,53 +28,15 @@ int	type_integer(va_list argptr, t_pattern tmp)
 		nbr = va_arg(argptr, intmax_t);
 	else if (tmp.cast == Z)
 		nbr = va_arg(argptr, size_t);
-
-
-	spaces = new_spaces();
-	if (nbr == 0 && tmp.precision == -1)
-		str = ft_strdup("");
 	else
-		str = ft_itoa(nbr);
+		nbr = va_arg(argptr, int);
+	return (nbr);
+}
 
-	if (nbr < 0)
-	{
-		spaces.prefix = "-";
-		buf = str;
-		str = ft_strsub(str, 1, ft_strlen(str) - 1);
-		ft_strdel(&buf);
-	}
-	spaces.zeroes = tmp.precision - ft_strlen(str);
-	if (spaces.zeroes < 0)
-		spaces.zeroes = 0;
-	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str) - ft_strlen(spaces.prefix);
-	if (spaces.start < 0)
-		spaces.start = 0;
-	if (tmp.plus == 1 && nbr >= 0)
-	{
-		spaces.prefix = "+";
-		spaces.start -= ft_strlen(spaces.prefix);
-	}
-	if (tmp.space == 1 && nbr >= 0 && spaces.prefix == 0)
-	{
-		spaces.prefix = " ";
-		spaces.start -= ft_strlen(spaces.prefix);
-	}
-	if (tmp.minus == 1)
-	{
-		spaces.end = spaces.start;
-		spaces.start = 0;
-	}
-	if (tmp.zero == 1 && tmp.precision == 0)
-	{
-		spaces.zeroes += spaces.start;
-		spaces.start = 0;
-	}
-	
-	// show_tmp(tmp);
-	// ft_printf("spaces.start: %d\n", spaces.start);
-	// ft_printf("spaces.end: %d\n", spaces.end);
-	// ft_printf("spaces.zeroes: %d\n", spaces.zeroes);
-	// printf("CHECK: %s\n", str);
+static int		print_int(t_spaces spaces, char *str)
+{
+	int		res;
+
 	res = 0;
 	while (spaces.start-- > 0)
 		res += ft_putchar(' ');
@@ -91,5 +47,59 @@ int	type_integer(va_list argptr, t_pattern tmp)
 	ft_strdel(&str);
 	while (spaces.end-- > 0)
 		res += ft_putchar(' ');
-	return(res);
+	return (res);
+}
+
+static void		handle_flags(t_spaces *sp, t_pattern tmp,
+					intmax_t nbr, char *str)
+{
+	sp->zeroes = tmp.precision - ft_strlen(str);
+	sp->zeroes < 0 ? sp->zeroes = 0 : 0;
+	sp->start = tmp.width - sp->zeroes
+			- ft_strlen(str) - ft_strlen(sp->prefix);
+	sp->start < 0 ? sp->start = 0 : 0;
+	if (tmp.plus == 1 && nbr >= 0)
+	{
+		sp->prefix = "+";
+		sp->start -= ft_strlen(sp->prefix);
+	}
+	if (tmp.space == 1 && nbr >= 0 && sp->prefix == 0)
+	{
+		sp->prefix = " ";
+		sp->start -= ft_strlen(sp->prefix);
+	}
+	if (tmp.minus == 1)
+	{
+		sp->end = sp->start;
+		sp->start = 0;
+	}
+	if (tmp.zero == 1 && tmp.precision == 0)
+	{
+		sp->zeroes += sp->start;
+		sp->start = 0;
+	}
+}
+
+int				type_integer(va_list argptr, t_pattern tmp)
+{
+	intmax_t	nbr;
+	char		*str;
+	t_spaces	spaces;
+	char		*buf;
+
+	nbr = cast_int(tmp, argptr);
+	spaces = new_spaces();
+	if (nbr == 0 && tmp.precision == -1)
+		str = ft_strdup("");
+	else
+		str = ft_itoa(nbr);
+	if (nbr < 0)
+	{
+		spaces.prefix = "-";
+		buf = str;
+		str = ft_strsub(str, 1, ft_strlen(str) - 1);
+		ft_strdel(&buf);
+	}
+	handle_flags(&spaces, tmp, nbr, str);
+	return (print_int(spaces, str));
 }

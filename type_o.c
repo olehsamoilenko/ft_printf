@@ -84,7 +84,6 @@ int					type_o(va_list argptr, t_pattern tmp)
 	uintmax_t	nbr;
 	char		*str;
 	t_spaces	spaces;
-	int			res;
 
 	nbr = cast_o(argptr, tmp);
 	if (nbr == 0 && tmp.precision == -1)

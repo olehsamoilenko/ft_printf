@@ -95,7 +95,6 @@ static void		null_handler(t_pattern *tmp, int **str)
 
 int				type_s(va_list argptr, t_pattern tmp)
 {
-	char		*buf;
 	int			*str;
 	t_spaces	spaces;
 	int			len;

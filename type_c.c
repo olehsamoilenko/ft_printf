@@ -38,10 +38,8 @@ static t_spaces		flags_handler(t_pattern tmp, int c)
 
 int					print_c(int c, t_pattern tmp)
 {
-	char		*str;
 	t_spaces	spaces;
 	int			res;
-	int			len;
 
 	res = 0;
 	spaces = flags_handler(tmp, c);

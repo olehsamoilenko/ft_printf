@@ -50,17 +50,13 @@ static t_spaces	flags_handler(t_pattern tmp, char *str, int nbr)
 
 	spaces = new_spaces();
 	spaces.zeroes = tmp.precision - ft_strlen(str);
-	if (spaces.zeroes < 0)
-		spaces.zeroes = 0;
+	spaces.zeroes < 0 ? spaces.zeroes = 0 : 0;
 	spaces.start = tmp.width - spaces.zeroes - ft_strlen(str);
-	if (spaces.start < 0)
-		spaces.start = 0;
+	spaces.start < 0 ? spaces.start = 0 : 0;
 	if ((tmp.hash == 1 && nbr != 0) || tmp.type == 'p')
 	{
-		if (tmp.type == 'x' || tmp.type == 'p')
-			spaces.prefix = "0x";
-		else if (tmp.type == 'X')
-			spaces.prefix = "0X";
+		tmp.type == 'x' || tmp.type == 'p' ? spaces.prefix = "0x" : 0;
+		tmp.type == 'X' ? spaces.prefix = "0X" : 0;
 		spaces.start -= ft_strlen(spaces.prefix);
 	}
 	if (tmp.minus == 1)
@@ -81,14 +77,13 @@ int				type_hex(va_list argptr, t_pattern tmp)
 	intmax_t	nbr;
 	char		*str;
 	t_spaces	spaces;
-	int			res;
 
 	nbr = cast_hex(argptr, tmp);
 	if (nbr == 0 && tmp.precision == -1)
 		str = ft_strdup("");
 	else if (tmp.type == 'x' || tmp.type == 'p')
 		str = itoa_base(nbr, 16, 0);
-	else if (tmp.type == 'X')
+	else
 		str = itoa_base(nbr, 16, 1);
 	spaces = flags_handler(tmp, str, nbr);
 	return (print_hex(spaces, str));

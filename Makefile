@@ -23,24 +23,21 @@ SRC =	ft_printf.c \
 		ft_putchar.c \
 		ft_putstr.c \
 		ft_strequ.c \
-		ft_strdel.c
+		ft_strdel.c \
+		recognise.c \
+		parsing.c
 
 all: $(NAME)
 
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c $(HEADER)
-	gcc -c $< -o $@
+	gcc $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
 	gcc -c $(SRC)
 	ar -rc $(NAME) $(OBJ)
 
-
-main:
-	gcc $(SRC) main.c
-
-	
 clean:
 	rm -f $(OBJ)
 

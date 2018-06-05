@@ -35,8 +35,6 @@ static intmax_t	cast_u(va_list argptr, t_pattern tmp)
 
 	if (tmp.cast == L || tmp.type == 'U')
 		nbr = va_arg(argptr, unsigned long);
-	else if (tmp.cast == NONE)
-		nbr = va_arg(argptr, unsigned int);
 	else if (tmp.cast == H)
 		nbr = (unsigned short)va_arg(argptr, unsigned int);
 	else if (tmp.cast == HH)
@@ -47,6 +45,8 @@ static intmax_t	cast_u(va_list argptr, t_pattern tmp)
 		nbr = va_arg(argptr, uintmax_t);
 	else if (tmp.cast == Z)
 		nbr = va_arg(argptr, size_t);
+	else
+		nbr = va_arg(argptr, unsigned int);
 	return (nbr);
 }
 
@@ -80,7 +80,6 @@ int				type_unsigned(va_list argptr, t_pattern tmp)
 	intmax_t	nbr;
 	char		*str;
 	t_spaces	spaces;
-	int			res;
 
 	nbr = cast_u(argptr, tmp);
 	if (nbr == 0 && tmp.precision == -1)

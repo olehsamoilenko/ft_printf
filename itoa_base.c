@@ -39,7 +39,11 @@ static char	convert(int digit, int letters)
 	return (0);
 }
 
-char		*itoa_base(uintmax_t num, int base, int letters) /* 0 - lower, 1 - upper */
+/*
+**			0 - lower, 1 - upper
+*/
+
+char		*itoa_base(uintmax_t num, int base, int letters)
 {
 	char	*res;
 	int		len;
