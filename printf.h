@@ -48,13 +48,6 @@ typedef struct	s_pattern
 	char		type;
 }				t_pattern;
 
-/*
-**			o: 0
-**			x: 0x
-**			X: 0X
-**			i: -, +, ' '
-*/
-
 typedef struct	s_spaces
 {
 	int			start;
