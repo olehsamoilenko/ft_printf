@@ -1,12 +1,12 @@
 ft_printf
 =====
-The syntax of ft_printf format is:
+The standart syntax of ft_printf format is:
 ```
 %[flags][width][.precision][length]type
 ```
 Available flags:
 
-|F      |D                                                 |
+|Flag   |Description                                       |
 |:-----:|--------------------------------------------------|
 |**#**  |alternative form                                  |
 |**0**  |prepends zeros for numeric types                  |
@@ -16,23 +16,23 @@ Available flags:
 
 Avaliable length convertings:
 
-|F     |D        |
-|:----:|---------|
-|**hh**|char     |
-|**h** |short    |
-|**z** |size_t   |
-|**l** |long     |
-|**ll**|long long|
-|**j** |intmax_t |
+|Flag  |Description|
+|:----:|-----------|
+|**hh**|char       |
+|**h** |short      |
+|**z** |size_t     |
+|**l** |long       |
+|**ll**|long long  |
+|**j** |intmax_t   |
 
 
 Available conversion types:
 
-|T    |D                                        |
+|Type |Description                              |
 |:---:|-----------------------------------------|
 |**s**|null-terminated string                   |
 |**S**|null-terminated unicode supporting string|
-|**p**|                                         |
+|**p**|unsigned hexadecimal lower-case number   |
 |**d**|signed decimal number                    |
 |**D**|singed long decimal number               |
 |**i**|signed decimal number                    |
@@ -49,3 +49,4 @@ Available conversion types:
 Useful features:
 * Flags, width, precision and type different arrangement support
 * More than one conversion specified type support
+* Unicode width and precision processing
